@@ -1,1 +1,3 @@
-Tjuring projekat
+#Simulacija rada Tjuringove mašine
+
+**Opis projekta:** Aplikacija bi trebalo da koristi boljem razumevanju rada Tjuringove mašine. Korisnik će moći da odabere da unese niy instrukcija, čija će ispravnost biti proveravana, ili će moći da unese Tjuring program u obliku grafa. Na osnovu tog ulaza, pokreće se simulacija na traci koja pokayuje na koji način se izvršavaju koraci unetog programa. Obeybedićemo unos programa iz fajla, čuvanje u fajl...
