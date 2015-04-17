@@ -31,7 +31,7 @@ void GraphGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) {
     if((mouseEvent->button() == Qt::LeftButton) && (m_Mode == MODE::STATE)) {
         Node *node = new Node(mouseEvent->scenePos(), this);
         node->updateNumberOfNodes();
-        node->setDrawMode(DRAW_CIRCLE::FULL);
+        node->setDrawMode(DRAW_SHAPE::FULL);
         addItem(node);
     }
     update();
@@ -43,7 +43,7 @@ void GraphGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
     Node *node;
     if(m_Mode == MODE::STATE) {
         node = new Node(mouseEvent->scenePos(), this);
-        node->setDrawMode(DRAW_CIRCLE::DASHED);
+        node->setDrawMode(DRAW_SHAPE::DASHED);
         addItem(node);
         update();
         removeLast(node);

@@ -23,7 +23,7 @@ public:
     static int numberOfNodes();
     static void updateNumberOfNodes();
 
-    void setDrawMode(DRAW_CIRCLE);
+    void setDrawMode(DRAW_SHAPE);
 
 signals:
     void updateNodeId();
@@ -38,7 +38,7 @@ private:
     int m_Id;
     static int s_numberOfNodes;
 
-    DRAW_CIRCLE m_Circle;
+    DRAW_SHAPE m_Circle;
 
     GraphGraphicsScene *m_Scene;
 };

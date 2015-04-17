@@ -7,10 +7,10 @@ enum MODE {
     TRANSITION
 };
 
-enum DRAW_CIRCLE {
+enum DRAW_SHAPE {
     DASHED,
     FULL,
-    SELECTED
+    FOCUSED
 };
 
 #endif // ENUMERATION
