@@ -65,7 +65,7 @@ void GraphGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
 void GraphGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent) {
     if(m_mode == MODE::TRANSITION) {
         transition->setEnd(mouseEvent->scenePos());
-        QPoint arrowDirection = transition->begin() - transition->end();
+        QPointF arrowDirection = transition->begin() - transition->end();
         transition->setDrawMode(DRAW_SHAPE::FULL);
         QList<QGraphicsItem* > items = transition->collidingItems();
         if(items.size() == 2) {

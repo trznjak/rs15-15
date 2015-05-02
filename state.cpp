@@ -8,14 +8,6 @@ State::State(QPointF point, GraphGraphicsScene *scene)
     m_circle = DRAW_SHAPE::DASHED;
 }
 
-State::State(State &state)
-    :m_center(state.m_center),
-     m_id(state.m_id),
-     s_numberOfNodes(state.s_numberOfNodes),
-     m_circle(state.m_circle),
-     m_scene(state.m_scene)
-{}
-
 State::~State() {
 //    emit updateNodeId();
 }
@@ -35,17 +27,6 @@ QPointF State::center() {
 void State::setDrawMode(DRAW_SHAPE s){
     /* metoda za postavljanje mode-a iscrtavanja */
     m_circle = s;
-}
-
-State &State::operator =(State &state) {
-    State temp(state);
-    std::swap(temp.m_center, m_center);
-    std::swap(temp.m_id, m_id);
-    std::swap(temp.s_numberOfNodes, s_numberOfNodes);
-    std::swap(temp.m_circle, m_circle);
-    std::swap(temp.m_scene, m_scene);
-
-    return *this;
 }
 
 void State::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {

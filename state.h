@@ -18,7 +18,6 @@ class State : public QGraphicsItem {
 
 public:
     State(QPointF point, GraphGraphicsScene *scene);
-    State(State& state);
     ~State();
 
     static int numberOfNodes();
@@ -26,8 +25,6 @@ public:
 
     QPointF center();
     void setDrawMode(DRAW_SHAPE s);
-
-    State& operator =(State& state);
 
 protected:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);

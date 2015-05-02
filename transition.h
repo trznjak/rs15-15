@@ -16,7 +16,6 @@ class State;
 class Transition : public QGraphicsItem {
 public:
     Transition(GraphGraphicsScene *scene);
-    Transition(Transition &transition);
     ~Transition();
 
     void setBegin(QPointF begin);
@@ -25,8 +24,6 @@ public:
     QPointF end() const;
     void setDrawMode(DRAW_SHAPE m);
     void setArrowDirecion(QPointF ad);
-
-    Transition& operator =(Transition& transition);
 
 protected:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);

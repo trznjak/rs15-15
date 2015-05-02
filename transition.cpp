@@ -6,16 +6,6 @@ Transition::Transition(GraphGraphicsScene *scene)
 
 }
 
-Transition::Transition(Transition &transition) {
-    m_from = transition.m_from;
-    m_to = transition.m_to;
-    m_begin = transition.m_begin;
-    m_end = transition.m_end;
-    m_arrowDirection = transition.m_arrowDirection;
-    m_line = transition.m_line;
-    m_scene = transition.m_scene;
-}
-
 Transition::~Transition() {
 
 }
@@ -44,17 +34,6 @@ void Transition::setArrowDirecion(QPointF ad) {
     m_arrowDirection = ad;
 }
 
-Transition &Transition::operator =(Transition &transition) {
-    Transition temp(transition);
-    std::swap(m_from, temp.m_from);
-    std::swap(m_to, temp.m_to);
-    std::swap(m_begin, temp.m_begin);
-    std::swap(m_end, temp.m_end);
-    std::swap(m_arrowDirection, temp.m_arrowDirection);
-    std::swap(m_line, temp.m_line);
-    std::swap(m_scene, temp.m_scene);
-}
-
 void Transition::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
     /* nasledjena metoda za crtanje graphics item-a */
     Q_UNUSED(option);
@@ -66,6 +45,8 @@ void Transition::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
     else if(m_line == DRAW_SHAPE::FULL) {
         painter->setPen(QPen(QBrush(Qt::SolidPattern), 2));
         painter->drawLine(m_begin, m_end);
+
+
 
     }
 }
