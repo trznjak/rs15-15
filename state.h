@@ -17,7 +17,7 @@ class GraphGraphicsScene;
 class State : public QGraphicsItem {
 
 public:
-    State(QPointF point, GraphGraphicsScene *scene);
+    State(QPointF point);
     ~State();
 
     static int numberOfNodes();
@@ -33,7 +33,7 @@ protected:
     QPainterPath shape();
 
 signals:
-        void updateNodeId();
+    void updateNodeId();
 
 private:
     QPointF m_center;
@@ -42,7 +42,6 @@ private:
 
     DRAW_SHAPE m_circle;
 
-    GraphGraphicsScene *m_scene;
 };
 
 

@@ -15,15 +15,19 @@ class State;
 
 class Transition : public QGraphicsItem {
 public:
-    Transition(GraphGraphicsScene *scene);
+    Transition();
     ~Transition();
 
-    void setBegin(QPointF begin);
+    void setBegin(QPointF);
+    void updateBegin();
+    void setEnd(QPointF);
+    void updateEnd();
     QPointF begin() const;
-    void setEnd(QPointF end);
     QPointF end() const;
+    void setFrom(State *from);
+    void setTo(State *to);
+
     void setDrawMode(DRAW_SHAPE m);
-    void setArrowDirecion(QPointF ad);
 
 protected:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
@@ -36,9 +40,7 @@ private:
 
     QPointF m_begin; // pocetak za isprekidanu liniju
     QPointF m_end; // kraj za isprekidanu liniju
-    QPointF m_arrowDirection;
     DRAW_SHAPE m_line;
-    GraphGraphicsScene *m_scene;
 };
 
 #endif // TRANSITION_H

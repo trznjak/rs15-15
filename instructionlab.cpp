@@ -1,25 +1,26 @@
 #include "instructionlab.h"
 
-InstructionLab *InstructionLab::s_InstructionLab = NULL;
+InstructionLab *InstructionLab::s_instructionLab = NULL;
 
 InstructionLab::InstructionLab() {}
 
 InstructionLab::~InstructionLab() {
-    /* brisanje prelaza */
-    for(QVector<Transition* >::iterator i = m_Transitions.begin(); i != m_Transitions.end(); i++) {
-        delete *i;
-    }
+    delete s_instructionLab;
 }
 
-void InstructionLab::addToInstructionlab(Transition *transition) {
+void InstructionLab::addToInstructionlab(State *state) {
     /* dodavanje prelaza u vektor */
-    m_Transitions.push_back(transition);
+    m_states.push_back(state);
+}
+
+const QVector<State* > &InstructionLab::states() {
+    return m_states;
 }
 
 InstructionLab* InstructionLab::instance() {
     /* klasa singelton */
-    if(!s_InstructionLab)
-        s_InstructionLab = new InstructionLab();
-    return s_InstructionLab;
+    if(!s_instructionLab)
+        s_instructionLab = new InstructionLab();
+    return s_instructionLab;
 }
 

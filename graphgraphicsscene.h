@@ -4,6 +4,7 @@
 #include "state.h"
 #include "transition.h"
 #include "enumeration.h"
+#include "instructionlab.h"
 
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
@@ -12,6 +13,7 @@
 
 class State;
 class Transition;
+class InstructionLab;
 
 class GraphGraphicsScene : public QGraphicsScene {
 
@@ -35,6 +37,8 @@ private:
     State *lastNode;
     State *node;
     Transition *transition;
+
+    InstructionLab *instructionLab;
 };
 
 #endif // GRAPHGRAPHICSSCENE_H

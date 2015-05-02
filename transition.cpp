@@ -1,7 +1,6 @@
 #include "transition.h"
 
-Transition::Transition(GraphGraphicsScene *scene)
-    :m_scene(scene)
+Transition::Transition()
 {
 
 }
@@ -14,6 +13,10 @@ void Transition::setBegin(QPointF begin) {
     m_begin = begin;
 }
 
+void Transition::updateBegin() {
+    m_begin = m_from->pos();
+}
+
 QPointF Transition::begin() const {
     return m_begin;
 }
@@ -22,16 +25,26 @@ void Transition::setEnd(QPointF end) {
     m_end = end;
 }
 
+void Transition::updateEnd() {
+    m_end = m_to->pos();
+}
+
 QPointF Transition::end() const {
     return m_end;
 }
 
-void Transition::setDrawMode(DRAW_SHAPE s) {
-    m_line = s;
+void Transition::setFrom(State *from) {
+    m_from = from;
+    updateBegin();
 }
 
-void Transition::setArrowDirecion(QPointF ad) {
-    m_arrowDirection = ad;
+void Transition::setTo(State *to) {
+    m_to = to;
+    updateEnd();
+}
+
+void Transition::setDrawMode(DRAW_SHAPE s) {
+    m_line = s;
 }
 
 void Transition::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
@@ -44,10 +57,9 @@ void Transition::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
     }
     else if(m_line == DRAW_SHAPE::FULL) {
         painter->setPen(QPen(QBrush(Qt::SolidPattern), 2));
+        updateBegin();
+        updateEnd();
         painter->drawLine(m_begin, m_end);
-
-
-
     }
 }
 

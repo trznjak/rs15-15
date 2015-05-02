@@ -5,18 +5,22 @@
 #include <QString>
 
 #include "transition.h"
+#include "state.h"
+
+class State;
 
 class InstructionLab {
 public:
     ~InstructionLab();
-    void addToInstructionlab(Transition *);
+    void addToInstructionlab(State *);
+    const QVector<State* >& states();
     static InstructionLab* instance();
+
 
 private:
     InstructionLab();
-    QVector<Transition* > m_Transitions;
-    QVector<QString > m_Instructions;
-    static InstructionLab *s_InstructionLab;
+    QVector<State* > m_states;
+    static InstructionLab *s_instructionLab;
 };
 
 #endif // INSTRUCTIONLAB_H

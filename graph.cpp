@@ -9,6 +9,7 @@ Graph::Graph(QWidget *parent) :
     ui->setupUi(this);
     m_scene->setParent(this);
     ui->graphicsView->setScene(m_scene);
+    ui->graphicsView->setRenderHint(QPainter::Antialiasing, true);
     ui->graphicsView->setMouseTracking(true);
 
     mapper = new QSignalMapper(this);
