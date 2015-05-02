@@ -19,9 +19,19 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
+        <widget class="QPushButton" name="defaultButton">
+         <property name="text">
+          <string>Default</string>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="state">
          <property name="text">
-          <string>Dodaj stanje</string>
+          <string>State</string>
          </property>
          <property name="checkable">
           <bool>true</bool>
@@ -31,7 +41,7 @@
        <item>
         <widget class="QPushButton" name="link">
          <property name="text">
-          <string>Dodaj granu</string>
+          <string>Transition</string>
          </property>
          <property name="checkable">
           <bool>true</bool>

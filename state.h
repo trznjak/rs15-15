@@ -14,33 +14,38 @@
 
 class GraphGraphicsScene;
 
-class Node : public QGraphicsItem {
+class State : public QGraphicsItem {
 
 public:
-    Node(QPointF point, GraphGraphicsScene *scene);
-    ~Node();
+    State(QPointF point, GraphGraphicsScene *scene);
+    State(State& state);
+    ~State();
 
     static int numberOfNodes();
     static void updateNumberOfNodes();
 
-    void setDrawMode(DRAW_SHAPE);
+    QPointF center();
+    void setDrawMode(DRAW_SHAPE s);
 
-signals:
-    void updateNodeId();
+    State& operator =(State& state);
 
 protected:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     QRectF boundingRect() const;
     void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
+    QPainterPath shape();
+
+signals:
+        void updateNodeId();
 
 private:
-    QPointF m_Center;
-    int m_Id;
+    QPointF m_center;
+    int m_id;
     static int s_numberOfNodes;
 
-    DRAW_SHAPE m_Circle;
+    DRAW_SHAPE m_circle;
 
-    GraphGraphicsScene *m_Scene;
+    GraphGraphicsScene *m_scene;
 };
 
 

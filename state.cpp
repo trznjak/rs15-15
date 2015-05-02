@@ -1,68 +1,103 @@
-#include "node.h"
+#include "state.h"
 
-int Node::s_numberOfNodes = 1;
+int State::s_numberOfNodes = 1;
 
-Node::Node(QPointF point, GraphGraphicsScene *scene)
-    :m_Center(point), m_Id(s_numberOfNodes), m_Scene(scene)
+State::State(QPointF point, GraphGraphicsScene *scene)
+    :m_center(point), m_id(s_numberOfNodes), m_scene(scene)
 {
-    setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsFocusable);
-
-    m_Circle = DRAW_SHAPE::DASHED;
+    m_circle = DRAW_SHAPE::DASHED;
 }
 
-Node::~Node() {
+State::State(State &state)
+    :m_center(state.m_center),
+     m_id(state.m_id),
+     s_numberOfNodes(state.s_numberOfNodes),
+     m_circle(state.m_circle),
+     m_scene(state.m_scene)
+{}
+
+State::~State() {
 //    emit updateNodeId();
 }
 
-int Node::numberOfNodes() {
+int State::numberOfNodes() {
     return s_numberOfNodes;
 }
 
-void Node::updateNumberOfNodes() {
+void State::updateNumberOfNodes() {
     s_numberOfNodes++;
 }
 
-void Node::setDrawMode(DRAW_SHAPE b){
-    /* metoda za postavljanje mode-a iscrtavanja */
-    m_Circle = b;
+QPointF State::center() {
+    return m_center;
 }
 
-void Node::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
+void State::setDrawMode(DRAW_SHAPE s){
+    /* metoda za postavljanje mode-a iscrtavanja */
+    m_circle = s;
+}
+
+State &State::operator =(State &state) {
+    State temp(state);
+    std::swap(temp.m_center, m_center);
+    std::swap(temp.m_id, m_id);
+    std::swap(temp.s_numberOfNodes, s_numberOfNodes);
+    std::swap(temp.m_circle, m_circle);
+    std::swap(temp.m_scene, m_scene);
+
+    return *this;
+}
+
+void State::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
     /* nasledjena metoda za crtanje graphics item-a */
     Q_UNUSED(option);
     Q_UNUSED(widget);
-    if(m_Circle == DRAW_SHAPE::FULL || (!this->hasFocus() && (m_Scene->mode() == MODE::DEFAULT))) {
+    if(m_circle == DRAW_SHAPE::FULL || (!this->hasFocus() && (m_scene->mode() == MODE::DEFAULT))) {
         /* crtanje punog kruga sa oznakom stanja */
-        painter->setPen(QPen(Qt::SolidLine));
-        painter->drawEllipse(m_Center, 25, 25);
-        QString state_id = QString::number(m_Id);
-        painter->drawText(QPointF(m_Center.x() - 2 - (state_id.length() - 1) * 3, m_Center.y() + 5), state_id);
+        painter->setPen(QPen(QBrush(Qt::SolidPattern), 2));
+        painter->setBrush(QBrush(Qt::white));
+        painter->drawEllipse(m_center, 25, 25);
+        setZValue(1);
+        QString state_id = QString::number(m_id);
+        painter->drawText(QPointF(m_center.x() - 2 - (state_id.length() - 1) * 3, m_center.y() + 5), state_id);
     }
-    else if(m_Circle == DRAW_SHAPE::DASHED){
+    else if(m_circle == DRAW_SHAPE::DASHED){
         /* iscrtavanje isprekidanog kruga */
         painter->setPen(QPen(Qt::DashLine));
-        painter->drawEllipse(m_Center, 25, 25);
+        painter->drawEllipse(m_center, 25, 25);
     }
-    else if(m_Circle == DRAW_SHAPE::FOCUSED) {
+    else if(m_circle == DRAW_SHAPE::FOCUSED) {
         /* selektovan krug */
         painter->setPen(QPen(Qt::blue, Qt::SolidLine));
-        painter->drawEllipse(m_Center, 25, 25);
-        QString state_id = QString::number(m_Id);
-        painter->drawText(QPointF(m_Center.x() - 2 - (state_id.length() - 1) * 3, m_Center.y() + 5), state_id);
-        this->setSelected(true);
+        painter->drawEllipse(m_center, 25, 25);
+        QString state_id = QString::number(m_id);
+        painter->drawText(QPointF(m_center.x() - 2 - (state_id.length() - 1) * 3, m_center.y() + 5), state_id);
     }
 }
 
-QRectF Node::boundingRect() const {
+QRectF State::boundingRect() const {
     /* nasledjena metoda postavljanje granicnog pravougaonika */
-    return QRectF(QPointF(m_Center.x() - 25, m_Center.y() + 25), QPointF(m_Center.x() + 25, m_Center.y() - 25));
+    return QRectF(QPointF(m_center.x() - 25, m_center.y() + 25), QPointF(m_center.x() + 25, m_center.y() - 25));
 }
 
-void Node::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) {
-    if(mouseEvent->button() == Qt::LeftButton && m_Scene->mode() == MODE::DEFAULT) {
+void State::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) {
+    if(mouseEvent->button() == Qt::LeftButton && m_scene->mode() == MODE::DEFAULT) {
         this->setFocus();
         this->setDrawMode(DRAW_SHAPE::FOCUSED);
-        qDebug() << "Focused: " << this->hasFocus();
     }
+    if(m_scene->mode() != MODE::DEFAULT) {
+        this->setFlag(QGraphicsItem::ItemIsMovable, false);
+        this->setFlag(QGraphicsItem::ItemIsFocusable, false);
+    }
+    else {
+        this->setFlag(QGraphicsItem::ItemIsMovable, true);
+        this->setFlag(QGraphicsItem::ItemIsFocusable, true);
+    }
+}
+
+QPainterPath State::shape() {
+    QPainterPath path;
+    path.addEllipse(this->boundingRect());
+    return path;
 }
 

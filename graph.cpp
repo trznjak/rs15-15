@@ -31,6 +31,7 @@ Graph::Graph(QWidget *parent) :
 Graph::~Graph() {
     delete ui;
     delete mapper;
+    delete m_scene;
 }
 
 void Graph::changeMode(int i) {
