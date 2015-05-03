@@ -25,6 +25,7 @@ public:
     QPointF begin() const;
     QPointF end() const;
     void setFrom(State *from);
+    State *from();
     void setTo(State *to);
 
     void setDrawMode(DRAW_SHAPE m);
@@ -41,6 +42,7 @@ private:
     QPointF m_begin; // pocetak za isprekidanu liniju
     QPointF m_end; // kraj za isprekidanu liniju
     DRAW_SHAPE m_line;
+    bool flag;
 };
 
 #endif // TRANSITION_H

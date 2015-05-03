@@ -1,8 +1,9 @@
 #include "transition.h"
 
-Transition::Transition()
-{
-
+Transition::Transition() {
+    m_from = 0;
+    m_to = 0;
+    flag = false;
 }
 
 Transition::~Transition() {
@@ -35,12 +36,16 @@ QPointF Transition::end() const {
 
 void Transition::setFrom(State *from) {
     m_from = from;
-    updateBegin();
+    if(m_to != 0) updateBegin();
+}
+
+State *Transition::from() {
+    return m_from;
 }
 
 void Transition::setTo(State *to) {
     m_to = to;
-    updateEnd();
+    if(m_from != 0) updateEnd();
 }
 
 void Transition::setDrawMode(DRAW_SHAPE s) {
@@ -54,12 +59,32 @@ void Transition::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
     if(m_line == DRAW_SHAPE::DASHED) {
         painter->setPen(QPen(Qt::DashLine));
         painter->drawLine(m_begin, m_end);
+
+
     }
     else if(m_line == DRAW_SHAPE::FULL) {
         painter->setPen(QPen(QBrush(Qt::SolidPattern), 2));
+
+        QLineF tempLine = QLineF(m_end, m_begin);
+        tempLine.setLength(25);
+        m_end = tempLine.p2();
+
+        /* crtanje linije */
+        QLineF line = QLineF(m_begin, m_end);
+        painter->drawLine(line);
+
+        /* crtanje strelice */
+        QLineF arrowl = QLineF(m_end, m_begin);
+        QLineF arrowr = QLineF(m_end, m_begin);
+        arrowl.setAngle(line.angle() - 20 + 180);
+        arrowr.setAngle(line.angle() + 20 + 180);
+        arrowl.setLength(25);
+        arrowr.setLength(25);
+        painter->drawLine(arrowl);
+        painter->drawLine(arrowr);
+
         updateBegin();
         updateEnd();
-        painter->drawLine(m_begin, m_end);
     }
 }
 

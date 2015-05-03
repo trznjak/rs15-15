@@ -48,7 +48,7 @@ void State::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
         painter->setPen(QPen(Qt::DashLine));
         painter->drawEllipse(QPoint(0,0), 25, 25);
     }
-    else if(m_circle == DRAW_SHAPE::FOCUSED) {
+    else if(m_circle == DRAW_SHAPE::FOCUSED && (dynamic_cast<GraphGraphicsScene* >(this->scene())->mode() == MODE::DEFAULT)) {
         /* selektovan krug */
         painter->setPen(QPen(QBrush(Qt::red, Qt::SolidPattern), 2));
         painter->setBrush(QBrush(Qt::white));

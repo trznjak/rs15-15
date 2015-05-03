@@ -36,7 +36,10 @@ Graph::~Graph() {
 }
 
 void Graph::changeMode(int i) {
-    /* Brise iscrtan isprekidani krug */
+    /*
+     * Brise iscrtan isprekidani krug
+     * kada se promeni mod
+     */
     if(m_scene->mode() == MODE::STATE && MODE(i) != MODE::STATE) {
         m_scene->removeLast(0);
     }

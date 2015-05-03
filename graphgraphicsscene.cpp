@@ -29,21 +29,22 @@ void GraphGraphicsScene::removeLast(State *node) {
 }
 
 void GraphGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) {
-    /* on mouse press event iscrtava stanje na koordinatama kursora ako je ukljucen mod za crtanje stanja */
     if((mouseEvent->button() == Qt::LeftButton) && (m_mode == MODE::STATE)) {
+        /* on mouse press event iscrtava stanje na koordinatama kursora ako je ukljucen mod za crtanje stanja */
         node = new State(mouseEvent->scenePos());
         node->moveBy(node->center().x(), node->center().y());
         node->updateNumberOfNodes();
         node->setDrawMode(DRAW_SHAPE::FULL);
         addItem(node);
-        //instructionLab->addToInstructionlab(node);
     }
     else if((mouseEvent->button() == Qt::LeftButton) && (m_mode == MODE::TRANSITION)) {
+        /* iscrtavanje inicijalne isprekidane linije */
         transition = new Transition();
         transition->setBegin(mouseEvent->scenePos());
         transition->setEnd(mouseEvent->scenePos());
         transition->setDrawMode(DRAW_SHAPE::DASHED);
         addItem(transition);
+
     }
 
     update();
@@ -51,8 +52,11 @@ void GraphGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) {
 }
 
 void GraphGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
-    /* kada je ukljucen mod iscrtava isprekidani krug kao indikator gde ce se iscrtati stanje */
     if(m_mode == MODE::STATE) {
+        /*
+         * kada je ukljucen mod iscrtava isprekidani krug kao indikator
+         * gde ce se iscrtati stanje
+         */
         node = new State(mouseEvent->scenePos());
         node->moveBy(node->center().x(), node->center().y());
         node->setDrawMode(DRAW_SHAPE::DASHED);
@@ -61,6 +65,13 @@ void GraphGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
         removeLast(node);
     }
     else if(m_mode == MODE::TRANSITION && (mouseEvent->buttons() & Qt::LeftButton)) {
+        /*
+         * update-uje krajnju tacku isprekidane linije
+         * i postavlja pocetni cvor da se ocuva smer iscrtavanja
+         */
+        if(transition->collidingItems().size() == 1) {
+            transition->setFrom(dynamic_cast<State* >(transition->collidingItems()[0]));
+        }
         transition->setEnd(mouseEvent->scenePos());
     }
     update();
@@ -69,12 +80,24 @@ void GraphGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
 
 void GraphGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent) {
     if(m_mode == MODE::TRANSITION) {
+        /*
+         * postavljanje pocetnog i krajnjeg cvora i
+         * promena iscravanja pune linije
+         */
         transition->setEnd(mouseEvent->scenePos());
-        transition->setDrawMode(DRAW_SHAPE::FULL);
         QList<QGraphicsItem* > items = transition->collidingItems();
-        if(items.size() == 2) {
-            transition->setFrom(dynamic_cast<State* >(items[0]));
-            transition->setTo(dynamic_cast<State* >(items[1]));
+        if(items.size() >= 2) {
+            transition->setDrawMode(DRAW_SHAPE::FULL);
+            if(transition->from() != dynamic_cast<State *>(items[0]))
+                transition->setTo(dynamic_cast<State* >(items[0]));
+            else
+                transition->setTo(dynamic_cast<State* >(items[1]));
+
+            transition->updateBegin();
+            transition->updateEnd();
+        }
+        else {
+            removeItem(transition);
         }
     }
     update();
