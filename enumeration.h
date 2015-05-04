@@ -9,7 +9,7 @@ enum MODE {
 
 enum DRAW_SHAPE {
     DASHED,
-    FULL,
+    NORMAL,
     FOCUSED
 };
 

@@ -62,7 +62,7 @@ void Transition::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
 
 
     }
-    else if(m_line == DRAW_SHAPE::FULL) {
+    else if(m_line == DRAW_SHAPE::NORMAL) {
         painter->setPen(QPen(QBrush(Qt::SolidPattern), 2));
 
         QLineF tempLine = QLineF(m_end, m_begin);

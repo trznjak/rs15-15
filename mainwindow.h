@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include "graph.h"
+#include "linijskekomande.h"
 
 #include <QMainWindow>
 

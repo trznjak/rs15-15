@@ -34,7 +34,7 @@ void GraphGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) {
         node = new State(mouseEvent->scenePos());
         node->moveBy(node->center().x(), node->center().y());
         node->updateNumberOfNodes();
-        node->setDrawMode(DRAW_SHAPE::FULL);
+        node->setDrawMode(DRAW_SHAPE::NORMAL);
         addItem(node);
     }
     else if((mouseEvent->button() == Qt::LeftButton) && (m_mode == MODE::TRANSITION)) {
@@ -87,7 +87,7 @@ void GraphGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
         transition->setEnd(mouseEvent->scenePos());
         QList<QGraphicsItem* > items = transition->collidingItems();
         if(items.size() >= 2) {
-            transition->setDrawMode(DRAW_SHAPE::FULL);
+            transition->setDrawMode(DRAW_SHAPE::NORMAL);
             if(transition->from() != dynamic_cast<State *>(items[0]))
                 transition->setTo(dynamic_cast<State* >(items[0]));
             else

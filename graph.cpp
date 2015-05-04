@@ -46,4 +46,5 @@ void Graph::changeMode(int i) {
 
     /* Postavljanje moda za crtanje stanja, prelaza ili default mod */
     m_scene->setMode(MODE(i));
+
 }

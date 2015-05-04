@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     graphgraphicsscene.cpp \
     instructionlab.cpp \
     transition.cpp \
-    state.cpp
+    state.cpp \
+    linijskekomande.cpp
 
 HEADERS  += mainwindow.h \
     enumeration.h \
@@ -28,7 +29,9 @@ HEADERS  += mainwindow.h \
     graphgraphicsscene.h \
     instructionlab.h \
     transition.h \
-    state.h
+    state.h \
+    linijskekomande.h
 
 FORMS    += mainwindow.ui \
-    graph.ui
+    graph.ui \
+    linijskekomande.ui
