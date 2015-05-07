@@ -15,6 +15,7 @@ void Transition::setBegin(QPointF begin) {
 }
 
 void Transition::updateBegin() {
+    qDebug() << "updateBegin" << m_from;
     m_begin = m_from->pos();
 }
 
@@ -29,7 +30,6 @@ void Transition::setEnd(QPointF end) {
 void Transition::updateEnd() {
     m_end = m_to->pos();
 }
-
 QPointF Transition::end() const {
     return m_end;
 }
@@ -118,6 +118,9 @@ QRectF Transition::boundingRect() const {
 
 QPainterPath Transition::shape() const {
     QPainterPath path;
+
+//    path.moveTo(m_begin);
+//    path.lineTo(m_end);
 
     QPolygonF polygon;
     polygon << QPointF(m_begin.x(), m_begin.y() + 5);
