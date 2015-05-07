@@ -34,7 +34,7 @@ void GraphGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) {
         node = new State(mouseEvent->scenePos());
         node->moveBy(node->center().x(), node->center().y());
         node->updateNumberOfNodes();
-        node->setDrawMode(DRAW_SHAPE::NORMAL);
+        node->setDrawShape(DRAW_SHAPE::NORMAL);
         addItem(node);
     }
     else if((mouseEvent->button() == Qt::LeftButton) && (m_mode == MODE::TRANSITION)) {
@@ -59,7 +59,7 @@ void GraphGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
          */
         node = new State(mouseEvent->scenePos());
         node->moveBy(node->center().x(), node->center().y());
-        node->setDrawMode(DRAW_SHAPE::DASHED);
+        node->setDrawShape(DRAW_SHAPE::DASHED);
         addItem(node);
         update();
         removeLast(node);

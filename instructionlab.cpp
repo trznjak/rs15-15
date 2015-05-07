@@ -8,12 +8,12 @@ InstructionLab::~InstructionLab() {
     delete s_instructionLab;
 }
 
-void InstructionLab::addToInstructionlab(State *state) {
+void InstructionLab::addToInstructionlab(Transition *transition) {
     /* dodavanje prelaza u vektor */
-    m_states.push_back(state);
+    m_states.push_back(transition);
 }
 
-const QVector<State* > &InstructionLab::states() {
+const QVector<Transition* > &InstructionLab::transitions() {
     return m_states;
 }
 

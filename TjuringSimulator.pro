@@ -21,7 +21,8 @@ SOURCES += main.cpp\
     instructionlab.cpp \
     transition.cpp \
     state.cpp \
-    linijskekomande.cpp
+    linijskekomande.cpp \
+    transitioninstruction.cpp
 
 HEADERS  += mainwindow.h \
     enumeration.h \
@@ -30,8 +31,10 @@ HEADERS  += mainwindow.h \
     instructionlab.h \
     transition.h \
     state.h \
-    linijskekomande.h
+    linijskekomande.h \
+    transitioninstruction.h
 
 FORMS    += mainwindow.ui \
     graph.ui \
-    linijskekomande.ui
+    linijskekomande.ui \
+    transitioninstruction.ui

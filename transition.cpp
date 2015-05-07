@@ -3,7 +3,7 @@
 Transition::Transition() {
     m_from = 0;
     m_to = 0;
-    flag = false;
+    setAcceptHoverEvents(true);
 }
 
 Transition::~Transition() {
@@ -52,6 +52,7 @@ void Transition::setDrawMode(DRAW_SHAPE s) {
     m_line = s;
 }
 
+
 void Transition::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
     /* nasledjena metoda za crtanje graphics item-a */
     Q_UNUSED(option);
@@ -63,7 +64,13 @@ void Transition::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
 
     }
     else if(m_line == DRAW_SHAPE::NORMAL) {
-        painter->setPen(QPen(QBrush(Qt::SolidPattern), 2));
+
+        if(dynamic_cast<GraphGraphicsScene* >(this->scene())->mode() == MODE::DEFAULT) {
+            painter->setPen(QPen(QBrush(m_color, Qt::SolidPattern), 2));
+        }
+        else {
+            painter->setPen(QPen(QBrush(Qt::black, Qt::SolidPattern), 2));
+        }
 
         QLineF tempLine = QLineF(m_end, m_begin);
         tempLine.setLength(25);
@@ -88,13 +95,35 @@ void Transition::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
     }
 }
 
+void Transition::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent) {
+    if(mouseEvent->button() == Qt::LeftButton && dynamic_cast<GraphGraphicsScene* >(this->scene())->mode() == MODE::DEFAULT) {
+        TransitionInstruction ti;
+        ti.exec();
+    }
+}
+
+void Transition::hoverEnterEvent(QGraphicsSceneHoverEvent *hoverEvent) {
+    Q_UNUSED(hoverEvent);
+    m_color = Qt::red;
+}
+
+void Transition::hoverLeaveEvent(QGraphicsSceneHoverEvent *hoverEvent) {
+    Q_UNUSED(hoverEvent);
+    m_color = Qt::black;
+}
+
 QRectF Transition::boundingRect() const {
     return QRectF(QPoint(m_begin.x(), m_begin.y() + 1), QPoint(m_end.x(), m_end.y() - 1));
 }
 
 QPainterPath Transition::shape() const {
     QPainterPath path;
-    path.moveTo(m_begin);
-    path.lineTo(m_end);
+
+    QPolygonF polygon;
+    polygon << QPointF(m_begin.x(), m_begin.y() + 5);
+    polygon << QPointF(m_begin.x(), m_begin.y() - 5);
+    polygon << QPointF(m_end.x(), m_end.y() - 5);
+    polygon << QPointF(m_end.x(), m_end.y() + 5);
+    path.addPolygon(polygon);
     return path;
 }

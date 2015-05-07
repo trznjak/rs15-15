@@ -6,6 +6,7 @@ State::State(QPointF point)
     :m_center(point), m_id(s_numberOfNodes)
 {
     m_circle = DRAW_SHAPE::DASHED;
+
 }
 
 State::~State() {
@@ -24,7 +25,7 @@ QPointF State::center() {
     return m_center;
 }
 
-void State::setDrawMode(DRAW_SHAPE s){
+void State::setDrawShape(DRAW_SHAPE s){
     /* metoda za postavljanje mode-a iscrtavanja */
     m_circle = s;
 }
@@ -33,9 +34,7 @@ void State::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
     /* nasledjena metoda za crtanje graphics item-a */
     Q_UNUSED(option);
     Q_UNUSED(widget);
-    qDebug() << this->m_id << this->m_circle << "paint";
     if(m_circle == DRAW_SHAPE::NORMAL || (!this->hasFocus() && (dynamic_cast<GraphGraphicsScene* >(this->scene())->mode() == MODE::DEFAULT))) {
-        qDebug() << this->m_id << "normal";
         /* crtanje punog kruga sa oznakom stanja */
         painter->setPen(QPen(QBrush(Qt::SolidPattern), 2));
         painter->setBrush(QBrush(Qt::white));
@@ -46,13 +45,11 @@ void State::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
 
     }
     else if(m_circle == DRAW_SHAPE::DASHED){
-        qDebug() << this->m_id << "dashed";
         /* iscrtavanje isprekidanog kruga */
         painter->setPen(QPen(Qt::DashLine));
         painter->drawEllipse(QPoint(0,0), 25, 25);
     }
     else if(m_circle == DRAW_SHAPE::FOCUSED && (dynamic_cast<GraphGraphicsScene* >(this->scene())->mode() == MODE::DEFAULT)) {
-        qDebug() << this->m_id << "focused";
         /* selektovan krug */
         painter->setPen(QPen(QBrush(Qt::red, Qt::SolidPattern), 2));
         painter->setBrush(QBrush(Qt::white));
@@ -77,10 +74,10 @@ void State::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) {
         this->setFlag(QGraphicsItem::ItemIsMovable, true);
         this->setFlag(QGraphicsItem::ItemIsFocusable, true);
     }
-    if(mouseEvent->button() == Qt::LeftButton && dynamic_cast<GraphGraphicsScene* >(this->scene())->mode() == MODE::DEFAULT) {
-        this->setFocus();
-        this->setDrawMode(DRAW_SHAPE::FOCUSED);
-    }
+//    if(mouseEvent->button() == Qt::LeftButton && dynamic_cast<GraphGraphicsScene* >(this->scene())->mode() == MODE::DEFAULT) {
+//        this->setFocus();
+//        this->setDrawMode(DRAW_SHAPE::FOCUSED);
+//    }
 }
 
 QPainterPath State::shape() {

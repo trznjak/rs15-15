@@ -24,7 +24,7 @@ public:
     static void updateNumberOfNodes();
 
     QPointF center();
-    void setDrawMode(DRAW_SHAPE s);
+    void setDrawShape(DRAW_SHAPE s);
 
 protected:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
