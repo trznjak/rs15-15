@@ -42,6 +42,7 @@ void GraphGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) {
         transition = new Transition();
         transition->setBegin(mouseEvent->scenePos());
         transition->setEnd(mouseEvent->scenePos());
+
         transition->setDrawMode(DRAW_SHAPE::DASHED);
         addItem(transition);
 
@@ -67,16 +68,17 @@ void GraphGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
     else if(m_mode == MODE::TRANSITION && (mouseEvent->buttons() & Qt::LeftButton)) {
         /*
          * update-uje krajnju tacku isprekidane linije
-         * i postavlja pocetni cvor da se ocuva smer iscrtavanja
          */
-        for(QGraphicsItem *i : transition->collidingItems()) {
-            if(dynamic_cast<State *>(i) != 0) {
-                qDebug() << "mouseMove" << dynamic_cast<State* >(i);
-                transition->setFrom(dynamic_cast<State* >(i));
-                break;
+        transition->setEnd(mouseEvent->scenePos());
+        qDebug() << "move" << transition->collidingItems().size();
+        if(transition->collidingItems().size() == 1) {
+            for(QGraphicsItem *i : transition->collidingItems()) {
+                if(dynamic_cast<State *>(i) != 0) {
+                    transition->setFrom(dynamic_cast<State* >(i));
+                    break;
+                }
             }
         }
-        transition->setEnd(mouseEvent->scenePos());
     }
     update();
     QGraphicsScene::mouseMoveEvent(mouseEvent);
@@ -90,7 +92,7 @@ void GraphGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
          */
         transition->setEnd(mouseEvent->scenePos());
         QList<QGraphicsItem* > items = transition->collidingItems();
-        if(items.size() >= 2) {
+        if(items.size() == 2) {
             transition->setDrawMode(DRAW_SHAPE::NORMAL);
             for(QGraphicsItem *i : items) {
                 if((dynamic_cast<State *>(i) != transition->from()) && (dynamic_cast<State *>(i) != 0)) {

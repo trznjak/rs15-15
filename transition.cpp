@@ -77,6 +77,10 @@ void Transition::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
         tempLine.setLength(25);
         m_end = tempLine.p2();
 
+        tempLine = QLineF(m_begin, m_end);
+        tempLine.setLength(25);
+        m_begin = tempLine.p2();
+
         /* crtanje linije */
         QLineF line = QLineF(m_begin, m_end);
         painter->drawLine(line);
