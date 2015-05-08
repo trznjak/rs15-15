@@ -70,12 +70,13 @@ void GraphGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
          * update-uje krajnju tacku isprekidane linije
          */
         transition->setEnd(mouseEvent->scenePos());
-        qDebug() << "move" << transition->collidingItems().size();
-        if(transition->collidingItems().size() == 1) {
+        if(transition->collidingItems().size()) {
             for(QGraphicsItem *i : transition->collidingItems()) {
                 if(dynamic_cast<State *>(i) != 0) {
-                    transition->setFrom(dynamic_cast<State* >(i));
-                    break;
+                    if(!transition->from()) {
+                        transition->setFrom(dynamic_cast<State* >(i));
+                        break;
+                    }
                 }
             }
         }
@@ -92,7 +93,7 @@ void GraphGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
          */
         transition->setEnd(mouseEvent->scenePos());
         QList<QGraphicsItem* > items = transition->collidingItems();
-        if(items.size() == 2) {
+        if(items.size() >= 2) {
             transition->setDrawMode(DRAW_SHAPE::NORMAL);
             for(QGraphicsItem *i : items) {
                 if((dynamic_cast<State *>(i) != transition->from()) && (dynamic_cast<State *>(i) != 0)) {

@@ -73,6 +73,9 @@ void Transition::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
             painter->setPen(QPen(QBrush(Qt::black, Qt::SolidPattern), 2));
         }
 
+        QPointF c = controlPoint(m_begin, m_end);
+
+
         QLineF tempLine = QLineF(m_end, m_begin);
         tempLine.setLength(25);
         m_end = tempLine.p2();
@@ -82,14 +85,16 @@ void Transition::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
         m_begin = tempLine.p2();
 
         /* crtanje linije */
-        QLineF line = QLineF(m_begin, m_end);
-        painter->drawLine(line);
+        QPainterPath path = QPainterPath(m_begin);
+        path.quadTo(c, m_end);
+        painter->drawPath(path);
 
         /* crtanje strelice */
+        QLineF line = QLineF(m_begin, m_end);
         QLineF arrowl = QLineF(m_end, m_begin);
         QLineF arrowr = QLineF(m_end, m_begin);
-        arrowl.setAngle(line.angle() - 20 + 180);
-        arrowr.setAngle(line.angle() + 20 + 180);
+        arrowl.setAngle(line.angle() - 40 + 180);
+        arrowr.setAngle(line.angle() + 180);
         arrowl.setLength(25);
         arrowr.setLength(25);
         painter->drawLine(arrowl);
@@ -134,4 +139,14 @@ QPainterPath Transition::shape() const {
     polygon << QPointF(m_end.x(), m_end.y() + 5);
     path.addPolygon(polygon);
     return path;
+}
+
+QPointF Transition::controlPoint(QPointF begin, QPointF end) {
+    QLineF l = QLineF(begin, end);
+    l.setLength(l.length() / 2);
+    QLineF l1 = QLineF(l.p2(), l.p1());
+    l1.setAngle(l.angle() + 90);
+    l1.setLength(50);
+    return l1.p2();
+
 }

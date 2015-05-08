@@ -51,6 +51,8 @@ private:
     QList<QString > instructions;
 
     Qt::GlobalColor m_color;
+
+    QPointF controlPoint(QPointF begin, QPointF end);
 };
 
 #endif // TRANSITION_H
