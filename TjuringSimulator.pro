@@ -25,7 +25,6 @@ SOURCES += main.cpp\
     pocetna.cpp \
     transitioninstruction.cpp
 
-
 HEADERS  += mainwindow.h \
     enumeration.h \
     graph.h \
