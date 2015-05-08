@@ -15,7 +15,6 @@ void Transition::setBegin(QPointF begin) {
 }
 
 void Transition::updateBegin() {
-    qDebug() << "updateBegin" << m_from;
     m_begin = m_from->pos();
 }
 
@@ -36,6 +35,7 @@ QPointF Transition::end() const {
 
 void Transition::setFrom(State *from) {
     m_from = from;
+    qDebug() << "setFrom" << m_from;
     if(m_to != 0) updateBegin();
 }
 
@@ -45,6 +45,7 @@ State *Transition::from() {
 
 void Transition::setTo(State *to) {
     m_to = to;
+    qDebug() << "setTo" << m_to;
     if(m_from != 0) updateEnd();
 }
 
