@@ -29,6 +29,7 @@ LinijskeKomande::~LinijskeKomande()
 
 void LinijskeKomande::ispisi()
 {
+    ui->listWidget->clear();
     QString text = ui->txt1->toPlainText();
 
     //Ovde smestam redove
@@ -58,7 +59,7 @@ void LinijskeKomande::ispisi()
            QListWidgetItem *item = new QListWidgetItem(linije[i]);
 
            item->setForeground(Qt::red); // sets red text
-           item->setBackground(Qt::white); // sets green background
+           item->setBackground(Qt::white);
 
 
            ui->listWidget->addItem(item);
@@ -68,8 +69,11 @@ void LinijskeKomande::ispisi()
        }
        else
        {
-           QListWidgetItem *item = new QListWidgetItem("Uspesno unesena linija!!! :-)");
+
+           QListWidgetItem *item = new QListWidgetItem(linije[i]);
+           item->setForeground(Qt::black);
            ui->listWidget->addItem(item);
+
        }
 
    }
