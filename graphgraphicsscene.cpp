@@ -71,6 +71,7 @@ void GraphGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
          */
         for(QGraphicsItem *i : transition->collidingItems()) {
             if(dynamic_cast<State *>(i) != 0) {
+                qDebug() << "mouseMove" << dynamic_cast<State* >(i);
                 transition->setFrom(dynamic_cast<State* >(i));
                 break;
             }
@@ -98,12 +99,8 @@ void GraphGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 }
             }
 
-//            qDebug() << transition;
-            qDebug() << "debug0";
             transition->updateBegin();
-            qDebug() << "debug1";
             transition->updateEnd();
-            qDebug() << "debug2";
         }
         else {
             removeItem(transition);

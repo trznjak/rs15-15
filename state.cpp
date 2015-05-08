@@ -39,7 +39,7 @@ void State::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
         painter->setPen(QPen(QBrush(Qt::SolidPattern), 2));
         painter->setBrush(QBrush(Qt::white));
         painter->drawEllipse(QPoint(0,0), 25, 25);
-//        setZValue(1);
+        setZValue(1);
         QString state_id = QString::number(m_id);
         painter->drawText(QPointF(-2 - (state_id.length() - 1) * 3, 5), state_id);
 
