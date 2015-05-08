@@ -5,6 +5,7 @@ LinijskeKomande::LinijskeKomande(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::LinijskeKomande)
 {
+    this->setVisible(false);
     ui->setupUi(this);
     qp = new QSignalMapper;
     qp1 = new QSignalMapper;
@@ -31,6 +32,7 @@ void LinijskeKomande::ispisi()
 {
     ui->listWidget->clear();
     QString text = ui->txt1->toPlainText();
+
 
     //Ovde smestam redove
     QStringList listaStringova;
