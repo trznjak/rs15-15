@@ -34,7 +34,7 @@ void GraphGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) {
         node = new State(mouseEvent->scenePos());
         node->moveBy(node->center().x(), node->center().y());
         node->updateNumberOfNodes();
-        node->setDrawMode(DRAW_SHAPE::NORMAL);
+        node->setDrawShape(DRAW_SHAPE::NORMAL);
         addItem(node);
     }
     else if((mouseEvent->button() == Qt::LeftButton) && (m_mode == MODE::TRANSITION)) {
@@ -59,7 +59,7 @@ void GraphGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
          */
         node = new State(mouseEvent->scenePos());
         node->moveBy(node->center().x(), node->center().y());
-        node->setDrawMode(DRAW_SHAPE::DASHED);
+        node->setDrawShape(DRAW_SHAPE::DASHED);
         addItem(node);
         update();
         removeLast(node);
@@ -69,8 +69,11 @@ void GraphGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
          * update-uje krajnju tacku isprekidane linije
          * i postavlja pocetni cvor da se ocuva smer iscrtavanja
          */
-        if(transition->collidingItems().size() == 1) {
-            transition->setFrom(dynamic_cast<State* >(transition->collidingItems()[0]));
+        for(QGraphicsItem *i : transition->collidingItems()) {
+            if(dynamic_cast<State *>(i) != 0) {
+                transition->setFrom(dynamic_cast<State* >(i));
+                break;
+            }
         }
         transition->setEnd(mouseEvent->scenePos());
     }
@@ -88,13 +91,19 @@ void GraphGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
         QList<QGraphicsItem* > items = transition->collidingItems();
         if(items.size() >= 2) {
             transition->setDrawMode(DRAW_SHAPE::NORMAL);
-            if(transition->from() != dynamic_cast<State *>(items[0]))
-                transition->setTo(dynamic_cast<State* >(items[0]));
-            else
-                transition->setTo(dynamic_cast<State* >(items[1]));
+            for(QGraphicsItem *i : items) {
+                if((dynamic_cast<State *>(i) != transition->from()) && (dynamic_cast<State *>(i) != 0)) {
+                    transition->setTo(dynamic_cast<State *>(i));
+                    break;
+                }
+            }
 
+//            qDebug() << transition;
+            qDebug() << "debug0";
             transition->updateBegin();
+            qDebug() << "debug1";
             transition->updateEnd();
+            qDebug() << "debug2";
         }
         else {
             removeItem(transition);

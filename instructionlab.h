@@ -8,18 +8,19 @@
 #include "state.h"
 
 class State;
+class Transition;
 
 class InstructionLab {
 public:
     ~InstructionLab();
-    void addToInstructionlab(State *);
-    const QVector<State* >& states();
+    void addToInstructionlab(Transition *);
+    const QVector<Transition* >& transitions();
     static InstructionLab* instance();
 
 
 private:
     InstructionLab();
-    QVector<State* > m_states;
+    QVector<Transition* > m_states;
     static InstructionLab *s_instructionLab;
 };
 

@@ -6,9 +6,12 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QStyleOptionGraphicsItem>
 #include <QGraphicsItem>
+#include <QMessageBox>
+#include <QPolygon>
 
 #include "state.h"
 #include "enumeration.h"
+#include "transitioninstruction.h"
 
 class GraphGraphicsScene;
 class State;
@@ -27,11 +30,13 @@ public:
     void setFrom(State *from);
     State *from();
     void setTo(State *to);
-
     void setDrawMode(DRAW_SHAPE m);
 
 protected:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent);
+    void hoverEnterEvent(QGraphicsSceneHoverEvent *hoverEvent);
+    void hoverLeaveEvent(QGraphicsSceneHoverEvent *hoverEvent);
     QRectF boundingRect() const;
     QPainterPath shape() const;
 
@@ -42,7 +47,10 @@ private:
     QPointF m_begin; // pocetak za isprekidanu liniju
     QPointF m_end; // kraj za isprekidanu liniju
     DRAW_SHAPE m_line;
-    bool flag;
+
+    QList<QString > instructions;
+
+    Qt::GlobalColor m_color;
 };
 
 #endif // TRANSITION_H
