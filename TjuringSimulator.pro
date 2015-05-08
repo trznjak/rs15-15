@@ -19,16 +19,19 @@ SOURCES += main.cpp\
     graph.cpp \
     graphgraphicsscene.cpp \
     instructionlab.cpp \
-    node.cpp \
-    transition.cpp
+    transition.cpp \
+    state.cpp \
+    linijskekomande.cpp
 
 HEADERS  += mainwindow.h \
     enumeration.h \
     graph.h \
     graphgraphicsscene.h \
     instructionlab.h \
-    node.h \
-    transition.h
+    transition.h \
+    state.h \
+    linijskekomande.h
 
 FORMS    += mainwindow.ui \
-    graph.ui
+    graph.ui \
+    linijskekomande.ui

@@ -1,15 +1,19 @@
 #ifndef GRAPHGRAPHICSSCENE_H
 #define GRAPHGRAPHICSSCENE_H
 
-#include "node.h"
+#include "state.h"
+#include "transition.h"
 #include "enumeration.h"
+#include "instructionlab.h"
 
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
 #include <QDebug>
 #include <QObject>
 
-class Node;
+class State;
+class Transition;
+class InstructionLab;
 
 class GraphGraphicsScene : public QGraphicsScene {
 
@@ -20,7 +24,7 @@ public:
     MODE mode() const;
 
 public slots:
-    void removeLast(Node *node);
+    void removeLast(State *node);
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
@@ -28,9 +32,13 @@ protected:
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
 
 private:
-    MODE m_Mode;
+    MODE m_mode;
 
-    Node *lastNode;
+    State *lastNode;
+    State *node;
+    Transition *transition;
+
+    InstructionLab *instructionLab;
 };
 
 #endif // GRAPHGRAPHICSSCENE_H

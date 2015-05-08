@@ -2,12 +2,13 @@
 #define GRAPH_H
 
 #include "graphgraphicsscene.h"
-#include "node.h"
+#include "state.h"
 #include "instructionlab.h"
 #include "enumeration.h"
 
 #include <QWidget>
 #include <QSignalMapper>
+#include <QButtonGroup>
 
 class GraphGraphicsScene;
 
@@ -28,8 +29,9 @@ public slots:
 private:
     Ui::Graph *ui;
 
-    GraphGraphicsScene *m_Scene;
+    GraphGraphicsScene *m_scene;
     QSignalMapper *mapper;
+    QButtonGroup group;
 
 };
 
