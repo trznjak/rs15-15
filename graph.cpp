@@ -7,6 +7,7 @@ Graph::Graph(QWidget *parent) :
     m_scene(new GraphGraphicsScene)
 {
     ui->setupUi(this);
+    this->setVisible(false);
     m_scene->setParent(this);
     ui->graphicsView->setScene(m_scene);
     ui->graphicsView->setRenderHint(QPainter::Antialiasing, true);
