@@ -4,7 +4,8 @@ GraphGraphicsScene::GraphGraphicsScene(QObject *parent)
     :QGraphicsScene(parent),
      instructionLab(0)
 {
-    setSceneRect(0, 0, 700, 500);
+    QDesktopWidget desktop;
+    setSceneRect(0, 0, desktop.geometry().width(), desktop.geometry().height());
     m_mode = MODE::DEFAULT;
     lastNode = 0;
     instructionLab = InstructionLab::instance();

@@ -32,7 +32,6 @@ private:
     GraphGraphicsScene *m_scene;
     QSignalMapper *mapper;
     QButtonGroup group;
-
 };
 
 #endif // GRAPH_H

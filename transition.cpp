@@ -73,9 +73,12 @@ void Transition::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
             painter->setPen(QPen(QBrush(Qt::black, Qt::SolidPattern), 2));
         }
 
-        QPointF c = controlPoint(m_begin, m_end);
-
-
+        QPointF c = controlPoint(m_begin, m_end, 40);
+        painter->setPen(QPen(QColor(Qt::darkGreen)));
+        painter->drawText(c, "o, z, D");
+        c.setY(c.y() + 12);
+        painter->drawText(c, "d, v, L");
+        painter->setPen(QPen(QColor(m_color)));
         QLineF tempLine = QLineF(m_end, m_begin);
         tempLine.setLength(25);
         m_end = tempLine.p2();
@@ -93,8 +96,8 @@ void Transition::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
         QLineF line = QLineF(m_begin, m_end);
         QLineF arrowl = QLineF(m_end, m_begin);
         QLineF arrowr = QLineF(m_end, m_begin);
-        arrowl.setAngle(line.angle() - 40 + 180);
-        arrowr.setAngle(line.angle() + 180);
+        arrowl.setAngle(line.angle() - 20 + 180);
+        arrowr.setAngle(line.angle() + 10 + 180);
         arrowl.setLength(25);
         arrowr.setLength(25);
         painter->drawLine(arrowl);
@@ -129,24 +132,22 @@ QRectF Transition::boundingRect() const {
 QPainterPath Transition::shape() const {
     QPainterPath path;
 
-//    path.moveTo(m_begin);
-//    path.lineTo(m_end);
-
     QPolygonF polygon;
-    polygon << QPointF(m_begin.x(), m_begin.y() + 5);
-    polygon << QPointF(m_begin.x(), m_begin.y() - 5);
-    polygon << QPointF(m_end.x(), m_end.y() - 5);
-    polygon << QPointF(m_end.x(), m_end.y() + 5);
+    polygon << QPointF(m_begin.x(), m_begin.y() + 10);
+    polygon << controlPoint(m_begin, m_end, 20);
+    polygon << QPointF(m_end.x(), m_end.y() + 10);
+    polygon << QPointF(m_end.x(), m_end.y() - 17);
+    polygon << controlPoint(m_begin, m_end, 0);
+    polygon << QPointF(m_begin.x(), m_begin.y() - 17);
     path.addPolygon(polygon);
     return path;
 }
 
-QPointF Transition::controlPoint(QPointF begin, QPointF end) {
+QPointF Transition::controlPoint(QPointF begin, QPointF end, int length) const {
     QLineF l = QLineF(begin, end);
     l.setLength(l.length() / 2);
     QLineF l1 = QLineF(l.p2(), l.p1());
     l1.setAngle(l.angle() + 90);
-    l1.setLength(50);
+    l1.setLength(length);
     return l1.p2();
-
 }

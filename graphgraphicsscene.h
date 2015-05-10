@@ -10,6 +10,7 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QDebug>
 #include <QObject>
+#include <QDesktopWidget>
 
 class State;
 class Transition;

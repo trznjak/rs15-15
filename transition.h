@@ -52,7 +52,7 @@ private:
 
     Qt::GlobalColor m_color;
 
-    QPointF controlPoint(QPointF begin, QPointF end);
+    QPointF controlPoint(QPointF begin, QPointF end, int length) const;
 };
 
 #endif // TRANSITION_H
