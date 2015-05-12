@@ -23,7 +23,8 @@ SOURCES += main.cpp\
     state.cpp \
     linijskekomande.cpp \
     pocetna.cpp \
-    transitioninstruction.cpp
+    transitioninstruction.cpp \
+    dialog.cpp
 
 HEADERS  += mainwindow.h \
     enumeration.h \
@@ -34,10 +35,12 @@ HEADERS  += mainwindow.h \
     state.h \
     linijskekomande.h \
     pocetna.h \
-    transitioninstruction.h
+    transitioninstruction.h \
+    dialog.h
 
 FORMS    += mainwindow.ui \
     graph.ui \
     linijskekomande.ui \
     pocetna.ui \
-    transitioninstruction.ui
+    transitioninstruction.ui \
+    dialog.ui
