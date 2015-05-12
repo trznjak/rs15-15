@@ -17,7 +17,6 @@ public:
     ~LinijskeKomande();
 public slots:
     void ispisi();
-    void prikaziUputstvo();
 
 private:
     Ui::LinijskeKomande *ui;

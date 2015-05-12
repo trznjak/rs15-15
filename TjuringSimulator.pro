@@ -44,3 +44,7 @@ FORMS    += mainwindow.ui \
     pocetna.ui \
     transitioninstruction.ui \
     dialog.ui
+
+RESOURCES += \
+    images/icons.qrc
+

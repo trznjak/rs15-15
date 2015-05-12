@@ -10,21 +10,17 @@ Pocetna::Pocetna(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QPixmap pixmap("graph.png");
+    QPixmap pixmap("://graph.png");
     QIcon buttonIcon(pixmap);
     ui->pushButton->setIcon(buttonIcon);
-<<<<<<< HEAD
     ui->pushButton->setIconSize(QSize(200, 200));
-=======
-    ui->pushButton->setIconSize(QSize(140, 140));
->>>>>>> 915df0b703cb0ae33aada069d51c1121bc3ac612
 
-    QPixmap pixmap_2("code.png");
+    QPixmap pixmap_2("://code.png");
     QIcon buttonIcon_2(pixmap_2);
     ui->pushButton_2->setIcon(buttonIcon_2);
     ui->pushButton_2->setIconSize(QSize(200, 200));
 
-    QPixmap pixmap_3("file.png");
+    QPixmap pixmap_3("://file.png");
     QIcon buttonIcon_3(pixmap_3);
     ui->pushButton_3->setIcon(buttonIcon_3);
     ui->pushButton_3->setIconSize(QSize(200, 200));
