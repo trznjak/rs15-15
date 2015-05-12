@@ -43,7 +43,6 @@ void State::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
     /* nasledjena metoda za crtanje graphics item-a */
     Q_UNUSED(option);
     Q_UNUSED(widget);
-    qDebug() << m_color;
     if(m_circle == DRAW_SHAPE::NORMAL) {
         /* crtanje punog kruga sa oznakom stanja */
         painter->setPen(QPen(QBrush(m_color, Qt::SolidPattern), 2));

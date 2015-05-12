@@ -121,11 +121,13 @@ void Transition::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
 }
 
 void Transition::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent) {
+    /* double click kada je u stisnuto default stanju otvara se dialog */
     if(mouseEvent->button() == Qt::LeftButton && dynamic_cast<GraphGraphicsScene* >(this->scene())->mode() == MODE::DEFAULT) {
-        TransitionInstruction ti;
+        TransitionInstruction ti(this);
         ti.exec();
     }
 
+    /* double click kada je stisnuto delete brise se ta grana */
     if(mouseEvent->button() == Qt::LeftButton && dynamic_cast<GraphGraphicsScene* >(this->scene())->mode() == MODE::DELETE) {
         removeSelf();
     }
@@ -148,6 +150,7 @@ QRectF Transition::boundingRect() const {
 QPainterPath Transition::shape() const {
     QPainterPath path;
 
+    /* malo cudan poligon za shape :D */
     QPolygonF polygon;
     polygon << QPointF(m_begin.x(), m_begin.y() + 10);
     polygon << controlPoint(m_begin, m_end, 30);
@@ -160,6 +163,7 @@ QPainterPath Transition::shape() const {
 }
 
 QPointF Transition::controlPoint(QPointF begin, QPointF end, int length) const {
+    /* pravljenje kontrolne tacke za bezierovu krivu */
     QLineF l = QLineF(begin, end);
     l.setLength(l.length() / 2);
     QLineF l1 = QLineF(l.p2(), l.p1());
