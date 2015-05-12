@@ -4,6 +4,8 @@ Transition::Transition() {
     m_from = 0;
     m_to = 0;
     setAcceptHoverEvents(true);
+    instructionLab = InstructionLab::instance();
+
 }
 
 Transition::~Transition() {
@@ -47,8 +49,20 @@ void Transition::setTo(State *to) {
     if(m_from != 0) updateEnd();
 }
 
+State *Transition::to() {
+    return m_to;
+}
+
 void Transition::setDrawMode(DRAW_SHAPE s) {
     m_line = s;
+}
+
+void Transition::removeSelf() {
+    instructionLab->removeTransition(this);
+    m_to->removeTransitons(this);
+    m_from->removeTransitons(this);
+    dynamic_cast<GraphGraphicsScene* >(this->scene())->removeItem(this);
+    delete this;
 }
 
 
@@ -126,10 +140,9 @@ void Transition::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent) {
         ti.exec();
     }
 
-    /*
-     * TODO: dodati kada je u stanju DELETE
-     * ovrisati prelaz i instrukcije vezane za njega
-     */
+    if(mouseEvent->button() == Qt::LeftButton && dynamic_cast<GraphGraphicsScene* >(this->scene())->mode() == MODE::DELETE) {
+        removeSelf();
+    }
 }
 
 void Transition::hoverEnterEvent(QGraphicsSceneHoverEvent *hoverEvent) {

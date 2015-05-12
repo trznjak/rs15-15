@@ -21,7 +21,7 @@ public:
 
 private:
     InstructionLab();
-    QVector<Transition* > m_states;
+    QVector<Transition* > m_transitions;
     static InstructionLab *s_instructionLab;
 };
 

@@ -10,15 +10,16 @@ InstructionLab::~InstructionLab() {
 
 void InstructionLab::addToInstructionlab(Transition *transition) {
     /* dodavanje prelaza u vektor */
-    m_states.push_back(transition);
+    m_transitions.push_back(transition);
 }
 
 void InstructionLab::removeTransition(Transition *transition) {
-    Q_UNUSED(transition);
+    /* brisanje prelaza iz vektora */
+    m_transitions.removeOne(transition);
 }
 
 const QVector<Transition* > &InstructionLab::transitions() {
-    return m_states;
+    return m_transitions;
 }
 
 InstructionLab* InstructionLab::instance() {

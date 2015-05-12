@@ -99,6 +99,9 @@ void GraphGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             for(QGraphicsItem *i : items) {
                 if((dynamic_cast<State *>(i) != transition->from()) && (dynamic_cast<State *>(i) != 0)) {
                     transition->setTo(dynamic_cast<State *>(i));
+                    instructionLab->addToInstructionlab(transition);
+                    transition->from()->addTransiton(transition);
+                    transition->to()->addTransiton(transition);
                     break;
                 }
             }

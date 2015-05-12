@@ -11,8 +11,10 @@
 
 #include "enumeration.h"
 #include "graphgraphicsscene.h"
+#include "transition.h"
 
 class GraphGraphicsScene;
+class Transition;
 
 class State : public QGraphicsItem {
 
@@ -25,6 +27,9 @@ public:
 
     QPointF center();
     void setDrawShape(DRAW_SHAPE s);
+
+    void addTransiton(Transition *);
+    void removeTransitons(Transition *);
 
 protected:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
@@ -40,6 +45,8 @@ private:
     QPointF m_center;
     int m_id;
     static int s_numberOfNodes;
+
+    QList<Transition* > transitions;
 
     DRAW_SHAPE m_circle;
 

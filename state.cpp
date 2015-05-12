@@ -30,6 +30,14 @@ void State::setDrawShape(DRAW_SHAPE s){
     m_circle = s;
 }
 
+void State::addTransiton(Transition *transition) {
+    transitions.push_back(transition);
+}
+
+void State::removeTransitons(Transition *transition) {
+    transitions.removeOne(transition);
+}
+
 void State::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
     /* nasledjena metoda za crtanje graphics item-a */
     Q_UNUSED(option);
@@ -68,11 +76,14 @@ void State::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) {
 }
 
 void State::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent) {
-    Q_UNUSED(mouseEvent);
-    /*
-     * TODO: dodati kada je u stanju DELETE da se obrise cvor
-     * i sve veze
-     */
+    if(mouseEvent->button() == Qt::LeftButton && dynamic_cast<GraphGraphicsScene* >(this->scene())->mode() == MODE::DELETE) {
+        qDebug() << this;
+        for(Transition *t : transitions) {
+            t->removeSelf();
+        }
+        delete this;
+    }
+    update();
 }
 
 QPainterPath State::shape() {

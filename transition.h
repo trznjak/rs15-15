@@ -12,6 +12,7 @@
 #include "state.h"
 #include "enumeration.h"
 #include "transitioninstruction.h"
+#include "instructionlab.h"
 
 class GraphGraphicsScene;
 class State;
@@ -30,7 +31,9 @@ public:
     void setFrom(State *from);
     State *from();
     void setTo(State *to);
+    State *to();
     void setDrawMode(DRAW_SHAPE m);
+    void removeSelf();
 
 protected:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
@@ -51,6 +54,8 @@ private:
     QList<QString > instructions;
 
     Qt::GlobalColor m_color;
+
+    InstructionLab *instructionLab;
 
     QPointF controlPoint(QPointF begin, QPointF end, int length) const;
 };
