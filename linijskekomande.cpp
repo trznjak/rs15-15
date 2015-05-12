@@ -1,6 +1,8 @@
 #include "linijskekomande.h"
 #include "ui_linijskekomande.h"
-
+#include<QDebug>
+#include<QDialog>
+#include "dialog.h"
 LinijskeKomande::LinijskeKomande(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::LinijskeKomande)
@@ -15,12 +17,12 @@ LinijskeKomande::LinijskeKomande(QWidget *parent) :
     connect(qp, SIGNAL(mapped(QString)), this, SLOT(ispisi()) );
 
 
-    qp1->setMapping(ui->Uputstvo, "0");
-    connect(ui->Uputstvo, SIGNAL(clicked()), qp1, SLOT(map()));
-    connect(qp1, SIGNAL(mapped(QString)), this, SLOT(prikaziUputstvo()) );
 
     ui->listWidget->setVisible(false);
-    ui->l->setVisible(false);
+
+
+//   Dialog qd;
+//   qd.exec();
 }
 
 LinijskeKomande::~LinijskeKomande()
@@ -42,6 +44,7 @@ void LinijskeKomande::ispisi()
 //   std::cout << listaStringova.length() << std::endl;
 
    std::vector<QString> linije;
+   std::vector<QString> ispravne_linije; //ovde smestam ispravne linije
    for(int i=0; i<listaStringova.length();i++)
    {
        linije.push_back(listaStringova[i]);
@@ -75,25 +78,13 @@ void LinijskeKomande::ispisi()
            QListWidgetItem *item = new QListWidgetItem(linije[i]);
            item->setForeground(Qt::black);
            ui->listWidget->addItem(item);
+           ispravne_linije.push_back(linije[i]);
 
        }
 
    }
+
+//   for(int j=0;j<ispravne_linije.size();j++)
+//       qDebug() << ispravne_linije[j];
 }
 
-void LinijskeKomande::prikaziUputstvo()
-{
-    ui->l->setVisible(true);
-    QListWidgetItem *item = new QListWidgetItem("Prvo unesete stanje Q pa bilo \n"
-                                                "koji broj (npr Q16) pa zatim\n"
-                                                "unesete razmak pa posle razmaka jedan\n"
-                                                "karakter pa zatim ponovo razmak \n"
-                                                "pa zatim drugi karakter\n"
-                                                "pa zatim L ili D ili M(levo desno\n ili ostajete \n"
-                                                "na tom mestu) pa zatim opet razmak\n i na kraju stanje u koje \n"
-                                                "zelite da predjete(isto kao i\n prvo stanje koje\n"
-                                                "ste uneli npr q21).Pravilan unos\n bi bio Q1 p r D Q2.\n"
-                                                "Srecno :-)");
-    ui->l->addItem(item);
-
-}

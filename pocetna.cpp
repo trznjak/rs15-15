@@ -13,7 +13,11 @@ Pocetna::Pocetna(QWidget *parent) :
     QPixmap pixmap("graph.png");
     QIcon buttonIcon(pixmap);
     ui->pushButton->setIcon(buttonIcon);
+<<<<<<< HEAD
     ui->pushButton->setIconSize(QSize(200, 200));
+=======
+    ui->pushButton->setIconSize(QSize(140, 140));
+>>>>>>> 915df0b703cb0ae33aada069d51c1121bc3ac612
 
     QPixmap pixmap_2("code.png");
     QIcon buttonIcon_2(pixmap_2);
@@ -35,7 +39,10 @@ Pocetna::Pocetna(QWidget *parent) :
 void Pocetna::prikaziLinijskeKomande()
 {
     widgetLinijskeKomande->setVisible(true);
+
     this->setVisible(false);
+    Dialog qd;
+    qd.exec();
 }
 
 Pocetna::~Pocetna()
