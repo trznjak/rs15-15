@@ -13,6 +13,10 @@ void InstructionLab::addToInstructionlab(Transition *transition) {
     m_states.push_back(transition);
 }
 
+void InstructionLab::removeTransition(Transition *transition) {
+    Q_UNUSED(transition);
+}
+
 const QVector<Transition* > &InstructionLab::transitions() {
     return m_states;
 }

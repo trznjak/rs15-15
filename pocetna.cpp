@@ -2,6 +2,7 @@
 #include "ui_pocetna.h"
 #include "dialog.h"
 #include "linijskekomande.h"
+#include "graph.h"
 
 Pocetna::Pocetna(QWidget *parent) :
     QWidget(parent),
@@ -26,8 +27,8 @@ Pocetna::Pocetna(QWidget *parent) :
 
     connect(ui->pushButton_2, SIGNAL(clicked()), this, SLOT(prikaziLinijskeKomande()));
     connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(prikaziGraph()));
-    widgetLinijskeKomande = parent->findChild<QWidget*>("LinijskeKomande");
-    widgetGraph = parent->findChild<QWidget*>("Graph");
+    widgetLinijskeKomande = parent->findChild<QWidget* >("LinijskeKomande");
+    widgetGraph = parent->findChild<Graph* >("Graph");
 
 }
 

@@ -14,6 +14,7 @@ class InstructionLab {
 public:
     ~InstructionLab();
     void addToInstructionlab(Transition *);
+    void removeTransition(Transition *);
     const QVector<Transition* >& transitions();
     static InstructionLab* instance();
 

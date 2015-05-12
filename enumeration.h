@@ -4,13 +4,13 @@
 enum MODE {
     DEFAULT,
     STATE,
-    TRANSITION
+    TRANSITION,
+    DELETE
 };
 
 enum DRAW_SHAPE {
     DASHED,
     NORMAL,
-    FOCUSED
 };
 
 #endif // ENUMERATION

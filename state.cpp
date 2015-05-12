@@ -39,7 +39,6 @@ void State::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
         painter->setPen(QPen(QBrush(Qt::SolidPattern), 2));
         painter->setBrush(QBrush(Qt::white));
         painter->drawEllipse(QPoint(0,0), 25, 25);
-//        setZValue(1);
         QString state_id = QString::number(m_id);
         painter->drawText(QPointF(-2 - (state_id.length() - 1) * 3, 5), state_id);
 
@@ -49,15 +48,6 @@ void State::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
         painter->setPen(QPen(Qt::DashLine));
         painter->drawEllipse(QPoint(0,0), 25, 25);
     }
-    else if(m_circle == DRAW_SHAPE::FOCUSED && (dynamic_cast<GraphGraphicsScene* >(this->scene())->mode() == MODE::DEFAULT)) {
-        /* selektovan krug */
-        painter->setPen(QPen(QBrush(Qt::red, Qt::SolidPattern), 2));
-        painter->setBrush(QBrush(Qt::white));
-        painter->drawEllipse(QPoint(0,0), 25, 25);
-        setZValue(1);
-        QString state_id = QString::number(m_id);
-        painter->drawText(QPointF(-2 - (state_id.length() - 1) * 3, 5), state_id);
-    }
 }
 
 QRectF State::boundingRect() const {
@@ -66,18 +56,23 @@ QRectF State::boundingRect() const {
 }
 
 void State::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) {
+    Q_UNUSED(mouseEvent);
     if(dynamic_cast<GraphGraphicsScene* >(this->scene())->mode() != MODE::DEFAULT) {
         this->setFlag(QGraphicsItem::ItemIsMovable, false);
-        this->setFlag(QGraphicsItem::ItemIsFocusable, false);
     }
     else {
         this->setFlag(QGraphicsItem::ItemIsMovable, true);
-        this->setFlag(QGraphicsItem::ItemIsFocusable, true);
     }
-//    if(mouseEvent->button() == Qt::LeftButton && dynamic_cast<GraphGraphicsScene* >(this->scene())->mode() == MODE::DEFAULT) {
-//        this->setFocus();
-//        this->setDrawMode(DRAW_SHAPE::FOCUSED);
-//    }
+
+
+}
+
+void State::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent) {
+    Q_UNUSED(mouseEvent);
+    /*
+     * TODO: dodati kada je u stanju DELETE da se obrise cvor
+     * i sve veze
+     */
 }
 
 QPainterPath State::shape() {

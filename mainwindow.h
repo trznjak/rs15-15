@@ -3,6 +3,8 @@
 
 #include "graph.h"
 #include "linijskekomande.h"
+#include "pocetna.h"
+#include "linijskekomande.h"
 
 #include <QMainWindow>
 
@@ -20,6 +22,11 @@ public:
 
 private:
     Ui::MainWindow *ui;
+
+    Graph *graph;
+    Pocetna *pocetna;
+    LinijskeKomande *linijskeKomande;
+
 };
 
 #endif // MAINWINDOW_H

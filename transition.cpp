@@ -35,7 +35,6 @@ QPointF Transition::end() const {
 
 void Transition::setFrom(State *from) {
     m_from = from;
-    qDebug() << "setFrom" << m_from;
     if(m_to != 0) updateBegin();
 }
 
@@ -45,7 +44,6 @@ State *Transition::from() {
 
 void Transition::setTo(State *to) {
     m_to = to;
-    qDebug() << "setTo" << m_to;
     if(m_from != 0) updateEnd();
 }
 
@@ -73,12 +71,26 @@ void Transition::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
             painter->setPen(QPen(QBrush(Qt::black, Qt::SolidPattern), 2));
         }
 
+//        QPolygonF polygon;
+//        polygon << QPointF(m_begin.x(), m_begin.y() + 10);
+//        polygon << controlPoint(m_begin, m_end, 30);
+//        polygon << QPointF(m_end.x(), m_end.y() + 10);
+//        polygon << QPointF(m_end.x(), m_end.y() - 17);
+//        polygon << controlPoint(m_begin, m_end, 0);
+//        polygon << QPointF(m_begin.x(), m_begin.y() - 17);
+//        painter->drawPolygon(polygon);
+
         QPointF c = controlPoint(m_begin, m_end, 40);
         painter->setPen(QPen(QColor(Qt::darkGreen)));
         painter->drawText(c, "o, z, D");
         c.setY(c.y() + 12);
         painter->drawText(c, "d, v, L");
         painter->setPen(QPen(QColor(m_color)));
+
+        /*
+         * Postavljanje pocetne i krajnje tacke
+         * da budu na rubovima kruga
+         */
         QLineF tempLine = QLineF(m_end, m_begin);
         tempLine.setLength(25);
         m_end = tempLine.p2();
@@ -96,7 +108,7 @@ void Transition::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
         QLineF line = QLineF(m_begin, m_end);
         QLineF arrowl = QLineF(m_end, m_begin);
         QLineF arrowr = QLineF(m_end, m_begin);
-        arrowl.setAngle(line.angle() - 20 + 180);
+        arrowl.setAngle(line.angle() - 30 + 180);
         arrowr.setAngle(line.angle() + 10 + 180);
         arrowl.setLength(25);
         arrowr.setLength(25);
@@ -113,6 +125,11 @@ void Transition::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent) {
         TransitionInstruction ti;
         ti.exec();
     }
+
+    /*
+     * TODO: dodati kada je u stanju DELETE
+     * ovrisati prelaz i instrukcije vezane za njega
+     */
 }
 
 void Transition::hoverEnterEvent(QGraphicsSceneHoverEvent *hoverEvent) {
@@ -134,7 +151,7 @@ QPainterPath Transition::shape() const {
 
     QPolygonF polygon;
     polygon << QPointF(m_begin.x(), m_begin.y() + 10);
-    polygon << controlPoint(m_begin, m_end, 20);
+    polygon << controlPoint(m_begin, m_end, 30);
     polygon << QPointF(m_end.x(), m_end.y() + 10);
     polygon << QPointF(m_end.x(), m_end.y() - 17);
     polygon << controlPoint(m_begin, m_end, 0);
