@@ -6,6 +6,7 @@ Transition::Transition() {
     setAcceptHoverEvents(true);
     instructionLab = InstructionLab::instance();
     m_color = Qt::black;
+    flag = false;
 
 }
 
@@ -66,6 +67,10 @@ void Transition::removeSelf() {
     delete this;
 }
 
+void Transition::setFlag(bool f) {
+    flag = f;
+}
+
 
 void Transition::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
     /* nasledjena metoda za crtanje graphics item-a */
@@ -79,44 +84,49 @@ void Transition::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
 
         painter->setPen(QPen(QBrush(m_color, Qt::SolidPattern), 2));
 
-        /*
-         * Postavljanje pocetne i krajnje tacke
-         * da budu na rubovima kruga
-         */
-        QLineF tempLine = QLineF(m_end, m_begin);
-        tempLine.setLength(25);
-        m_end = tempLine.p2();
+        if(!flag) {
+            /*
+             * Postavljanje pocetne i krajnje tacke
+             * da budu na rubovima kruga
+             */
+            QLineF tempLine = QLineF(m_end, m_begin);
+            tempLine.setLength(25);
+            m_end = tempLine.p2();
 
-        tempLine = QLineF(m_begin, m_end);
-        tempLine.setLength(25);
-        m_begin = tempLine.p2();
+            tempLine = QLineF(m_begin, m_end);
+            tempLine.setLength(25);
+            m_begin = tempLine.p2();
 
-        QPointF c = controlPoint(m_begin, m_end, 40);
-        painter->setPen(QPen(QColor(Qt::darkGreen)));
-        painter->drawText(c, "o, z, D");
-        c.setY(c.y() + 12);
-        painter->drawText(c, "d, v, L");
-        painter->setPen(QPen(QColor(m_color)));
+            QPointF c = controlPoint(m_begin, m_end, 40);
+            painter->setPen(QPen(QColor(Qt::darkGreen)));
+            painter->drawText(c, "o, z, D");
+            c.setY(c.y() + 12);
+            painter->drawText(c, "d, v, L");
+            painter->setPen(QPen(QColor(m_color)));
 
 
-        /* crtanje linije */
-        QPainterPath path = QPainterPath(m_begin);
-        path.quadTo(c, m_end);
-        painter->drawPath(path);
+            /* crtanje linije */
+            QPainterPath path = QPainterPath(m_begin);
+            path.quadTo(c, m_end);
+            painter->drawPath(path);
 
-        /* crtanje strelice */
-        QLineF line = QLineF(m_begin, m_end);
-        QLineF arrowl = QLineF(m_end, m_begin);
-        QLineF arrowr = QLineF(m_end, m_begin);
-        arrowl.setAngle(line.angle() - 30 + 180);
-        arrowr.setAngle(line.angle() + 10 + 180);
-        arrowl.setLength(25);
-        arrowr.setLength(25);
-        painter->drawLine(arrowl);
-        painter->drawLine(arrowr);
+            /* crtanje strelice */
+            QLineF line = QLineF(m_begin, m_end);
+            QLineF arrowl = QLineF(m_end, m_begin);
+            QLineF arrowr = QLineF(m_end, m_begin);
+            arrowl.setAngle(line.angle() - 30 + 180);
+            arrowr.setAngle(line.angle() + 10 + 180);
+            arrowl.setLength(25);
+            arrowr.setLength(25);
+            painter->drawLine(arrowl);
+            painter->drawLine(arrowr);
 
-        updateBegin();
-        updateEnd();
+            updateBegin();
+            updateEnd();
+        }
+        else {
+            painter->drawEllipse(m_from->pos(), 60, 60);
+        }
     }
 }
 

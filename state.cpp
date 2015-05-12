@@ -8,6 +8,7 @@ State::State(QPointF point)
     m_circle = DRAW_SHAPE::DASHED;
     setAcceptHoverEvents(true);
     m_color = Qt::black;
+    QGraphicsItem::setZValue(1);
 }
 
 State::~State() {
@@ -47,7 +48,6 @@ void State::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
         /* crtanje punog kruga sa oznakom stanja */
         painter->setPen(QPen(QBrush(m_color, Qt::SolidPattern), 2));
         painter->setBrush(QBrush(Qt::white));
-        setZValue(1);
         painter->drawEllipse(QPoint(0,0), 25, 25);
         QString state_id = QString::number(m_id);
         painter->drawText(QPointF(-2 - (state_id.length() - 1) * 3, 5), state_id);
@@ -77,13 +77,20 @@ void State::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) {
 
 void State::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent) {
     if(mouseEvent->button() == Qt::LeftButton && dynamic_cast<GraphGraphicsScene* >(this->scene())->mode() == MODE::DELETE) {
-        qDebug() << this;
         for(Transition *t : transitions) {
             t->removeSelf();
         }
         delete this;
     }
-    update();
+    else if(mouseEvent->button() == Qt::LeftButton && dynamic_cast<GraphGraphicsScene* >(this->scene())->mode() == MODE::TRANSITION) {
+        Transition *transition = new Transition;
+        transition->setFrom(this);
+        transition->setTo(this);
+        transition->setDrawMode(DRAW_SHAPE::NORMAL);
+        transition->setFlag(true);
+        this->scene()->addItem(transition);
+        this->addTransiton(transition);
+    }
 }
 
 void State::hoverEnterEvent(QGraphicsSceneHoverEvent *hoverEvent) {

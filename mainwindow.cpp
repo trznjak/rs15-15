@@ -9,6 +9,9 @@ MainWindow::MainWindow(QWidget *parent) :
     graph = new Graph(this);
     linijskeKomande = new LinijskeKomande(this);
     pocetna = new Pocetna(this);
+//    qDebug() << ui->stackedWidget->currentIndex();
+//    ui->stackedWidget->insertWidget(0, new Pocetna(this));
+//    ui->stackedWidget->insertWidget(1, new Graph(this));
 }
 
 MainWindow::~MainWindow() {

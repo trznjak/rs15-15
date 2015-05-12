@@ -40,9 +40,6 @@ protected:
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *hoverEvent);
     QPainterPath shape();
 
-signals:
-    void updateNodeId();
-
 private:
     QPointF m_center;
     int m_id;

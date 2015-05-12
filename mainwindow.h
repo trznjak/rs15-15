@@ -7,6 +7,7 @@
 #include "linijskekomande.h"
 
 #include <QMainWindow>
+#include <QDebug>
 
 namespace Ui {
 class MainWindow;

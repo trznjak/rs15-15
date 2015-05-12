@@ -34,6 +34,7 @@ public:
     State *to();
     void setDrawMode(DRAW_SHAPE m);
     void removeSelf();
+    void setFlag(bool);
 
 protected:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
@@ -50,6 +51,7 @@ private:
     QPointF m_begin; // pocetak za isprekidanu liniju
     QPointF m_end; // kraj za isprekidanu liniju
     DRAW_SHAPE m_line;
+    bool flag;
 
     QList<QString > instructions;
 
