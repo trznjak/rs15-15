@@ -5,6 +5,7 @@ Transition::Transition() {
     m_to = 0;
     setAcceptHoverEvents(true);
     instructionLab = InstructionLab::instance();
+    m_color = Qt::black;
 
 }
 
@@ -73,33 +74,10 @@ void Transition::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
     if(m_line == DRAW_SHAPE::DASHED) {
         painter->setPen(QPen(Qt::DashLine));
         painter->drawLine(m_begin, m_end);
-
-
     }
     else if(m_line == DRAW_SHAPE::NORMAL) {
 
-        if(dynamic_cast<GraphGraphicsScene* >(this->scene())->mode() == MODE::DEFAULT) {
-            painter->setPen(QPen(QBrush(m_color, Qt::SolidPattern), 2));
-        }
-        else {
-            painter->setPen(QPen(QBrush(Qt::black, Qt::SolidPattern), 2));
-        }
-
-//        QPolygonF polygon;
-//        polygon << QPointF(m_begin.x(), m_begin.y() + 10);
-//        polygon << controlPoint(m_begin, m_end, 30);
-//        polygon << QPointF(m_end.x(), m_end.y() + 10);
-//        polygon << QPointF(m_end.x(), m_end.y() - 17);
-//        polygon << controlPoint(m_begin, m_end, 0);
-//        polygon << QPointF(m_begin.x(), m_begin.y() - 17);
-//        painter->drawPolygon(polygon);
-
-        QPointF c = controlPoint(m_begin, m_end, 40);
-        painter->setPen(QPen(QColor(Qt::darkGreen)));
-        painter->drawText(c, "o, z, D");
-        c.setY(c.y() + 12);
-        painter->drawText(c, "d, v, L");
-        painter->setPen(QPen(QColor(m_color)));
+        painter->setPen(QPen(QBrush(m_color, Qt::SolidPattern), 2));
 
         /*
          * Postavljanje pocetne i krajnje tacke
@@ -112,6 +90,14 @@ void Transition::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
         tempLine = QLineF(m_begin, m_end);
         tempLine.setLength(25);
         m_begin = tempLine.p2();
+
+        QPointF c = controlPoint(m_begin, m_end, 40);
+        painter->setPen(QPen(QColor(Qt::darkGreen)));
+        painter->drawText(c, "o, z, D");
+        c.setY(c.y() + 12);
+        painter->drawText(c, "d, v, L");
+        painter->setPen(QPen(QColor(m_color)));
+
 
         /* crtanje linije */
         QPainterPath path = QPainterPath(m_begin);

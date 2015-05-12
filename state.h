@@ -36,6 +36,8 @@ protected:
     QRectF boundingRect() const;
     void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent);
+    void hoverEnterEvent(QGraphicsSceneHoverEvent *hoverEvent);
+    void hoverLeaveEvent(QGraphicsSceneHoverEvent *hoverEvent);
     QPainterPath shape();
 
 signals:
@@ -49,6 +51,7 @@ private:
     QList<Transition* > transitions;
 
     DRAW_SHAPE m_circle;
+    Qt::GlobalColor m_color;
 
 };
 
