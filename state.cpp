@@ -12,7 +12,6 @@ State::State(QPointF point)
 }
 
 State::~State() {
-//    emit updateNodeId();
 }
 
 int State::numberOfNodes() {
@@ -83,7 +82,7 @@ void State::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent) {
         delete this;
     }
     else if(mouseEvent->button() == Qt::LeftButton && dynamic_cast<GraphGraphicsScene* >(this->scene())->mode() == MODE::TRANSITION) {
-        Transition *transition = new Transition;
+        Transition *transition = new Transition();
         transition->setFrom(this);
         transition->setTo(this);
         transition->setDrawMode(DRAW_SHAPE::NORMAL);
@@ -102,6 +101,7 @@ void State::hoverLeaveEvent(QGraphicsSceneHoverEvent *hoverEvent) {
     Q_UNUSED(hoverEvent);
     m_color = Qt::black;
 }
+
 
 QPainterPath State::shape() {
     QPainterPath path;

@@ -33,6 +33,7 @@ public:
     void setTo(State *to);
     State *to();
     void setDrawMode(DRAW_SHAPE m);
+    DRAW_SHAPE drawMode();
     void removeSelf();
     void setFlag(bool);
 
@@ -41,6 +42,7 @@ protected:
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent);
     void hoverEnterEvent(QGraphicsSceneHoverEvent *hoverEvent);
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *hoverEvent);
+    QVariant itemChange(GraphicsItemChange change, const QVariant &value);
     QRectF boundingRect() const;
     QPainterPath shape() const;
 
@@ -50,8 +52,10 @@ private:
 
     QPointF m_begin; // pocetak za isprekidanu liniju
     QPointF m_end; // kraj za isprekidanu liniju
+    QPointF m_center; // za kruznu granu
+    double m_angle;
     DRAW_SHAPE m_line;
-    bool flag;
+    bool m_flag;
 
     QList<QString > instructions;
 

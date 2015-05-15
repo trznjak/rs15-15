@@ -92,24 +92,26 @@ void GraphGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
          * postavljanje pocetnog i krajnjeg cvora i
          * promena iscravanja pune linije
          */
+        bool flag = true;
         transition->setEnd(mouseEvent->scenePos());
         QList<QGraphicsItem* > items = transition->collidingItems();
-        if(items.size() >= 2) {
-            transition->setDrawMode(DRAW_SHAPE::NORMAL);
-            for(QGraphicsItem *i : items) {
-                if((dynamic_cast<State *>(i) != transition->from()) && (dynamic_cast<State *>(i) != 0)) {
-                    transition->setTo(dynamic_cast<State *>(i));
-                    instructionLab->addToInstructionlab(transition);
-                    transition->from()->addTransiton(transition);
-                    transition->to()->addTransiton(transition);
-                    break;
-                }
+        transition->setDrawMode(DRAW_SHAPE::NORMAL);
+        for(QGraphicsItem *i : items) {
+            if((dynamic_cast<State* >(i) != transition->from()) && (dynamic_cast<State* >(i) != 0) && (transition->from() != 0)) {
+                flag = false;
+                transition->setTo(dynamic_cast<State* >(i));
+                instructionLab->addToInstructionlab(transition);
+                transition->from()->addTransiton(transition);
+                transition->to()->addTransiton(transition);
+                transition->updateBegin();
+                transition->updateEnd();
+                break;
             }
+            else {
 
-            transition->updateBegin();
-            transition->updateEnd();
+            }
         }
-        else {
+        if(this->items().contains(transition) && flag) {
             removeItem(transition);
         }
     }

@@ -6,7 +6,8 @@ Transition::Transition() {
     setAcceptHoverEvents(true);
     instructionLab = InstructionLab::instance();
     m_color = Qt::black;
-    flag = false;
+    m_flag = false;
+    QGraphicsItem::setFlag(QGraphicsItem::ItemIsFocusable);
 
 }
 
@@ -59,6 +60,10 @@ void Transition::setDrawMode(DRAW_SHAPE s) {
     m_line = s;
 }
 
+DRAW_SHAPE Transition::drawMode() {
+    return m_line;
+}
+
 void Transition::removeSelf() {
     instructionLab->removeTransition(this);
     m_to->removeTransitons(this);
@@ -68,7 +73,11 @@ void Transition::removeSelf() {
 }
 
 void Transition::setFlag(bool f) {
-    flag = f;
+    m_flag = f;
+    m_center = m_from->pos();
+    m_angle = 0;
+    QGraphicsItem::setFlag(QGraphicsItem::ItemIsMovable);
+    QGraphicsItem::setFlag(QGraphicsItem::ItemSendsGeometryChanges);
 }
 
 
@@ -84,7 +93,7 @@ void Transition::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
 
         painter->setPen(QPen(QBrush(m_color, Qt::SolidPattern), 2));
 
-        if(!flag) {
+        if(!m_flag) {
             /*
              * Postavljanje pocetne i krajnje tacke
              * da budu na rubovima kruga
@@ -99,9 +108,9 @@ void Transition::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
 
             QPointF c = controlPoint(m_begin, m_end, 40);
             painter->setPen(QPen(QColor(Qt::darkGreen)));
-            painter->drawText(c, "o, z, D");
+            painter->drawText(c, "o/z, D");
             c.setY(c.y() + 12);
-            painter->drawText(c, "d, v, L");
+            painter->drawText(c, "d/v, L");
             painter->setPen(QPen(QColor(m_color)));
 
 
@@ -125,8 +134,11 @@ void Transition::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
             updateEnd();
         }
         else {
-            painter->drawEllipse(m_from->pos(), 60, 60);
+            painter->setPen(QPen(QBrush(m_color, Qt::SolidPattern), 1));
+            QPointF center = QPointF(m_from->pos().x() + (50 * cos(m_angle)), m_from->pos().y() + (50 * sin(m_angle)));
+            painter->drawEllipse(center, 50, 50);
         }
+
     }
 }
 
@@ -153,22 +165,41 @@ void Transition::hoverLeaveEvent(QGraphicsSceneHoverEvent *hoverEvent) {
     m_color = Qt::black;
 }
 
+QVariant Transition::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant &value) {
+    if(change == QGraphicsItem::ItemPositionChange && this->scene()) {
+        m_angle = (m_angle + 0.1) >= 360 ? 0 : (m_angle + 0.1);
+        qDebug() << QPointF(cos(m_angle), sin(m_angle));
+        return QPointF(cos(m_angle), sin(m_angle));
+    }
+    return QGraphicsItem::itemChange(change, value);
+}
+
 QRectF Transition::boundingRect() const {
-    return QRectF(QPoint(m_begin.x(), m_begin.y() + 1), QPoint(m_end.x(), m_end.y() - 1));
+    if(m_flag)
+        return QRectF(QPoint(m_from->pos().x() - 50 + (50 * cos(-m_angle)), m_from->pos().y() + 50 + (50 * sin(m_angle))),
+                      QPoint(m_from->pos().x() + 50 + (50 * cos(m_angle)), m_from->pos().y() - 50 - (50 * sin(-m_angle))));
+    else
+        return QRectF(QPoint(m_begin.x(), m_begin.y() + 1), QPoint(m_end.x(), m_end.y() - 1));
 }
 
 QPainterPath Transition::shape() const {
     QPainterPath path;
 
-    /* malo cudan poligon za shape :D */
-    QPolygonF polygon;
-    polygon << QPointF(m_begin.x(), m_begin.y() + 10);
-    polygon << controlPoint(m_begin, m_end, 30);
-    polygon << QPointF(m_end.x(), m_end.y() + 10);
-    polygon << QPointF(m_end.x(), m_end.y() - 17);
-    polygon << controlPoint(m_begin, m_end, 0);
-    polygon << QPointF(m_begin.x(), m_begin.y() - 17);
-    path.addPolygon(polygon);
+    if(m_flag) {
+        QPointF center = QPointF(m_from->pos().x() + (50 * cos(m_angle)), m_from->pos().y() + (50 * sin(m_angle)));
+        path.addEllipse(center, 50, 50);
+    }
+    else {
+        /* malo cudan poligon za shape :D */
+        QPolygonF polygon;
+        polygon << QPointF(m_begin.x(), m_begin.y() + 10);
+        polygon << controlPoint(m_begin, m_end, 30);
+        polygon << QPointF(m_end.x(), m_end.y() + 10);
+        polygon << QPointF(m_end.x(), m_end.y() - 17);
+        polygon << controlPoint(m_begin, m_end, 0);
+        polygon << QPointF(m_begin.x(), m_begin.y() - 17);
+        path.addPolygon(polygon);
+    }
     return path;
 }
 
