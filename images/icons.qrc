@@ -3,5 +3,9 @@
         <file>code.png</file>
         <file>file.png</file>
         <file>graph.png</file>
+        <file>delete.png</file>
+        <file>hand.png</file>
+        <file>line.png</file>
+        <file>circle.png</file>
     </qresource>
 </RCC>

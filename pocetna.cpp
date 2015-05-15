@@ -28,15 +28,16 @@ Pocetna::Pocetna(QWidget *parent) :
     connect(ui->pushButton_2, SIGNAL(clicked()), this, SLOT(prikaziLinijskeKomande()));
     connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(prikaziGraph()));
     widgetLinijskeKomande = parent->findChild<QWidget* >("LinijskeKomande");
-    widgetGraph = parent->findChild<Graph* >("Graph");
+    widgetGraph = parent->findChild<QWidget* >("Graph");
 
 }
 
 void Pocetna::prikaziLinijskeKomande()
 {
+    qDebug() << widgetLinijskeKomande;
     widgetLinijskeKomande->setVisible(true);
-
     this->setVisible(false);
+
     Dialog qd;
     qd.exec();
 }

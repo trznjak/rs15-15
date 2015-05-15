@@ -9,6 +9,7 @@ State::State(QPointF point)
     setAcceptHoverEvents(true);
     m_color = Qt::black;
     QGraphicsItem::setZValue(1);
+    m_tipStanja = TIP(0);
 }
 
 State::~State() {
@@ -31,12 +32,16 @@ void State::setDrawShape(DRAW_SHAPE s){
     m_circle = s;
 }
 
+void State::setTipStanja(TIP t) {
+    m_tipStanja = t;
+}
+
 void State::addTransiton(Transition *transition) {
-    transitions.push_back(transition);
+    m_transitions.push_back(transition);
 }
 
 void State::removeTransitons(Transition *transition) {
-    transitions.removeOne(transition);
+    m_transitions.removeOne(transition);
 }
 
 void State::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
@@ -76,7 +81,7 @@ void State::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) {
 
 void State::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent) {
     if(mouseEvent->button() == Qt::LeftButton && dynamic_cast<GraphGraphicsScene* >(this->scene())->mode() == MODE::DELETE) {
-        for(Transition *t : transitions) {
+        for(Transition *t : m_transitions) {
             t->removeSelf();
         }
         delete this;

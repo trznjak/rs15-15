@@ -13,6 +13,11 @@
 #include "graphgraphicsscene.h"
 #include "transition.h"
 
+enum TIP {
+    POCETNO = 1,
+    KRAJNJE = 2,
+};
+
 class GraphGraphicsScene;
 class Transition;
 
@@ -27,6 +32,9 @@ public:
 
     QPointF center();
     void setDrawShape(DRAW_SHAPE s);
+
+    /* !!!!! TODO: dodati da se stave pocetno i kranje stanje !!!!!!!!*/
+    void setTipStanja(TIP t);
 
     void addTransiton(Transition *);
     void removeTransitons(Transition *);
@@ -43,9 +51,10 @@ protected:
 private:
     QPointF m_center;
     int m_id;
+    TIP m_tipStanja;
     static int s_numberOfNodes;
 
-    QList<Transition* > transitions;
+    QList<Transition* > m_transitions;
 
     DRAW_SHAPE m_circle;
     Qt::GlobalColor m_color;

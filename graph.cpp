@@ -14,7 +14,23 @@ Graph::Graph(QWidget *parent) :
     ui->graphicsView->setMouseTracking(true);
 
     mapper = new QSignalMapper(this);
-    mapper->
+
+    QPixmap pixmap0(":/hand.png");
+    QIcon buttonIcon0(pixmap0);
+    ui->defaultButton->setIcon(buttonIcon0);
+    ui->defaultButton->setIconSize(QSize(30, 30));
+    QPixmap pixmap1(":/circle.png");
+    QIcon buttonIcon1(pixmap1);
+    ui->stateButton->setIcon(buttonIcon1);
+    ui->stateButton->setIconSize(QSize(30, 30));
+    QPixmap pixmap2(":/line.png");
+    QIcon buttonIcon2(pixmap2);
+    ui->transitionButton->setIcon(buttonIcon2);
+    ui->transitionButton->setIconSize(QSize(30, 30));
+    QPixmap pixmap3(":/delete.png");
+    QIcon buttonIcon(pixmap3);
+    ui->deleteButton->setIcon(buttonIcon);
+    ui->deleteButton->setIconSize(QSize(30, 30));
 
     connect(ui->deleteButton, SIGNAL(clicked()), mapper, SLOT(map()));
     mapper->setMapping(ui->deleteButton, MODE::DELETE);

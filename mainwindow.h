@@ -8,6 +8,9 @@
 
 #include <QMainWindow>
 #include <QDebug>
+#include <QVBoxLayout>
+#include <QPushButton>
+#include <QSpacerItem>
 
 namespace Ui {
 class MainWindow;
@@ -20,6 +23,9 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+
+public slots:
+    void back();
 
 private:
     Ui::MainWindow *ui;
