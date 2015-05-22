@@ -11,14 +11,20 @@ LinijskeKomande::LinijskeKomande(QWidget *parent) :
     ui->setupUi(this);
     qp = new QSignalMapper;
     qp1 = new QSignalMapper;
+    qp2 = new QSignalMapper;
 
     qp->setMapping(ui->btn1, "0");
     connect(ui->btn1, SIGNAL(clicked()), qp, SLOT(map()));
-    connect(qp, SIGNAL(mapped(QString)), this, SLOT(ispisi()) );
+    connect(qp, SIGNAL(mapped(QString)), this, SLOT(ocisti()) );
 
+    qp1->setMapping(ui->btn2, "0");
+    connect(ui->btn2, SIGNAL(clicked()), qp1, SLOT(map()));
+    connect(qp1, SIGNAL(mapped(QString)), this, SLOT(ispisi()) );
 
+    qp2->setMapping(ui->btn3, "0");
+    connect(ui->btn3, SIGNAL(clicked()), qp2, SLOT(map()));
+    connect(qp2, SIGNAL(mapped(QString)), this, SLOT(obrisi()) );
 
-    ui->listWidget->setVisible(false);
 
 
 //   Dialog qd;
@@ -32,59 +38,51 @@ LinijskeKomande::~LinijskeKomande()
 
 void LinijskeKomande::ispisi()
 {
-    ui->listWidget->clear();
-    QString text = ui->txt1->toPlainText();
 
 
-    //Ovde smestam redove
-    QStringList listaStringova;
-    //ovde smestam reci svakog reda
-    QStringList reci;
-   listaStringova=text.split("\n");
-//   std::cout << listaStringova.length() << std::endl;
+    QString linija = ui->lineEdit->text();
 
-   std::vector<QString> linije;
+
+
    std::vector<QString> ispravne_linije; //ovde smestam ispravne linije
-   for(int i=0; i<listaStringova.length();i++)
-   {
-       linije.push_back(listaStringova[i]);
-
-
-
-   }
 
 
    //ovde za sada bojim stvari u list widgetu
-   for(int i=0; i<linije.size();i++)
-   {
 
-       ui->listWidget->setVisible(true);
-       if(!linije[i].contains(QRegExp("Q[0-9]+ [a-z] [a-z] [D,M,L] Q[0-9]+")))
+
+       if(!linija.contains(QRegExp("Q[0-9]+ [a-z] [a-z] [D,M,L] Q[0-9]+")))
        {
-           QListWidgetItem *item = new QListWidgetItem(linije[i]);
-
-           item->setForeground(Qt::red); // sets red text
-           item->setBackground(Qt::white);
 
 
-           ui->listWidget->addItem(item);
 
 
-           ui->listWidget->show();
+
+           ui->lineEdit->setStyleSheet("QLineEdit {background-color: red;}");
+
+
+
        }
        else
        {
 
-           QListWidgetItem *item = new QListWidgetItem(linije[i]);
+           QListWidgetItem *item = new QListWidgetItem(linija);
            item->setForeground(Qt::black);
            ui->listWidget->addItem(item);
-           ispravne_linije.push_back(linije[i]);
+           ispravne_linije.push_back(linija);
 
        }
 
-   }
 
-//   for(int j=0;j<ispravne_linije.size();j++)
-//       qDebug() << ispravne_linije[j];
+
+
+}
+void LinijskeKomande::ocisti()
+{
+    ui->lineEdit->clear();
+    ui->lineEdit->setStyleSheet("QLineEdit {background-color: white;}");
 }
 
+void LinijskeKomande::obrisi()
+{
+
+}

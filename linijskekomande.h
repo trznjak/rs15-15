@@ -17,11 +17,14 @@ public:
     ~LinijskeKomande();
 public slots:
     void ispisi();
+    void ocisti();
+    void obrisi();
 
 private:
     Ui::LinijskeKomande *ui;
     QSignalMapper *qp;
     QSignalMapper *qp1;
+    QSignalMapper *qp2;
 };
 
 #endif // LINIJSKEKOMANDE_H
