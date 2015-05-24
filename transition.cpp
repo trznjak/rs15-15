@@ -136,6 +136,10 @@ void Transition::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
         else {
             painter->setPen(QPen(QBrush(m_color, Qt::SolidPattern), 1));
             QPointF center = QPointF(m_from->pos().x() + (50 * cos(m_angle)), m_from->pos().y() + (50 * sin(m_angle)));
+            QLineF line = QLineF(m_from->pos(), center);
+            line.setLength(line.length() * 2 + 10);
+            QPointF textPoint = line.p2();
+            painter->drawText(textPoint, "d/v, R");
             painter->drawEllipse(center, 50, 50);
         }
 
@@ -168,7 +172,6 @@ void Transition::hoverLeaveEvent(QGraphicsSceneHoverEvent *hoverEvent) {
 QVariant Transition::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant &value) {
     if(change == QGraphicsItem::ItemPositionChange && this->scene()) {
         m_angle = (m_angle + 0.1) >= 360 ? 0 : (m_angle + 0.1);
-        qDebug() << QPointF(cos(m_angle), sin(m_angle));
         return QPointF(cos(m_angle), sin(m_angle));
     }
     return QGraphicsItem::itemChange(change, value);

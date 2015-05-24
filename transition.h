@@ -47,15 +47,15 @@ protected:
     QPainterPath shape() const;
 
 private:
-    State *m_from; // cvor od koga krece linija
-    State *m_to; // cvor do koga ide linija
+    State *m_from;      // cvor od koga krece linija
+    State *m_to;        // cvor do koga ide linija
 
-    QPointF m_begin; // pocetak za isprekidanu liniju
-    QPointF m_end; // kraj za isprekidanu liniju
-    QPointF m_center; // za kruznu granu
+    QPointF m_begin;    // pocetak za isprekidanu liniju
+    QPointF m_end;      // kraj za isprekidanu liniju
+    QPointF m_center;   // za kruznu granu
     double m_angle;
     DRAW_SHAPE m_line;
-    bool m_flag;
+    bool m_flag;        // da li je kruzna grana ili normalna
 
     QList<QString > instructions;
 
