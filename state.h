@@ -32,6 +32,7 @@ public:
 
     QPointF center();
     void setDrawShape(DRAW_SHAPE s);
+    int id();
 
     /* !!!!! TODO: dodati da se stave pocetno i kranje stanje !!!!!!!!*/
     void setTipStanja(TIP t);
@@ -58,6 +59,10 @@ private:
 
     DRAW_SHAPE m_circle;
     Qt::GlobalColor m_color;
+
+    InstructionLab *instructionLab;
+
+    void updateStateId(int id);
 
 };
 

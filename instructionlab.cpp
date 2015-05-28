@@ -2,10 +2,13 @@
 
 InstructionLab *InstructionLab::s_instructionLab = NULL;
 
-InstructionLab::InstructionLab() {}
+InstructionLab::InstructionLab() {
+
+}
 
 InstructionLab::~InstructionLab() {
     delete s_instructionLab;
+    delete parent;
 }
 
 void InstructionLab::addToInstructionlab(Transition *transition) {
@@ -27,5 +30,13 @@ InstructionLab* InstructionLab::instance() {
     if(!s_instructionLab)
         s_instructionLab = new InstructionLab();
     return s_instructionLab;
+}
+
+
+void InstructionLab::fromGraphToString() {
+    m_instructionsAsString.clear();
+    for(Transition *t : m_transitions)
+        m_instructionsAsString.append(t->ispis());
+    qDebug() << m_instructionsAsString;
 }
 

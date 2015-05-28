@@ -46,7 +46,8 @@ FORMS    += mainwindow.ui \
     dialog.ui
 
 RESOURCES += \
-    images/icons.qrc
+    images/icons.qrc \
+    file/instruciton.qrc
 
 DISTFILES +=
 

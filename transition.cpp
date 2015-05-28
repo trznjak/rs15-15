@@ -1,5 +1,6 @@
 #include "transition.h"
 
+
 Transition::Transition() {
     m_from = 0;
     m_to = 0;
@@ -9,10 +10,17 @@ Transition::Transition() {
     m_flag = false;
     QGraphicsItem::setFlag(QGraphicsItem::ItemIsFocusable);
 
+    instructions.push_front("1/0, R");
+    instructions.push_front("0/0, L");
+    instructions.push_front("=/<, R");
+
+    ti = new TransitionInstruction(this);
+    QObject::connect(ti, SIGNAL(accepted()), this, SLOT(snimiInstrukcije()));
+
 }
 
 Transition::~Transition() {
-
+//    delete instructions;
 }
 
 void Transition::setBegin(QPointF begin) {
@@ -68,7 +76,7 @@ void Transition::removeSelf() {
     instructionLab->removeTransition(this);
     m_to->removeTransitons(this);
     m_from->removeTransitons(this);
-    dynamic_cast<GraphGraphicsScene* >(this->scene())->removeItem(this);
+    //dynamic_cast<GraphGraphicsScene* >(this->scene())->removeItem(this);
     delete this;
 }
 
@@ -80,6 +88,9 @@ void Transition::setFlag(bool f) {
     QGraphicsItem::setFlag(QGraphicsItem::ItemSendsGeometryChanges);
 }
 
+void Transition::snimiInstrukcije() {
+    //instructions = ti->instructions();
+}
 
 void Transition::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
     /* nasledjena metoda za crtanje graphics item-a */
@@ -107,10 +118,13 @@ void Transition::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
             m_begin = tempLine.p2();
 
             QPointF c = controlPoint(m_begin, m_end, 40);
+            QPointF temp = c;
             painter->setPen(QPen(QColor(Qt::darkGreen)));
-            painter->drawText(c, "o/z, D");
-            c.setY(c.y() + 12);
-            painter->drawText(c, "d/v, L");
+            int i = 1;
+            for(QString s : instructions) {
+                painter->drawText(temp, s);
+                temp.setY(c.y() - (i++) * 15);
+            }
             painter->setPen(QPen(QColor(m_color)));
 
 
@@ -134,12 +148,17 @@ void Transition::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
             updateEnd();
         }
         else {
-            painter->setPen(QPen(QBrush(m_color, Qt::SolidPattern), 1));
+            painter->setPen(QPen(QColor(Qt::darkGreen), 1));
             QPointF center = QPointF(m_from->pos().x() + (50 * cos(m_angle)), m_from->pos().y() + (50 * sin(m_angle)));
             QLineF line = QLineF(m_from->pos(), center);
             line.setLength(line.length() * 2 + 10);
             QPointF textPoint = line.p2();
-            painter->drawText(textPoint, "d/v, R");
+            int i = 1;
+            for(QString s : instructions) {
+                painter->drawText(textPoint, s);
+                textPoint.setY(textPoint.y() + (i++) * 12);
+            }
+            painter->setPen(QPen(QBrush(m_color, Qt::SolidPattern), 1));
             painter->drawEllipse(center, 50, 50);
         }
 
@@ -149,8 +168,8 @@ void Transition::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
 void Transition::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent) {
     /* double click kada je u stisnuto default stanju otvara se dialog */
     if(mouseEvent->button() == Qt::LeftButton && dynamic_cast<GraphGraphicsScene* >(this->scene())->mode() == MODE::DEFAULT) {
-        TransitionInstruction ti(this);
-        ti.exec();
+
+        ti->exec();
     }
 
     /* double click kada je stisnuto delete brise se ta grana */
@@ -214,4 +233,12 @@ QPointF Transition::controlPoint(QPointF begin, QPointF end, int length) const {
     l1.setAngle(l.angle() + 90);
     l1.setLength(length);
     return l1.p2();
+}
+
+QString &Transition::ispis() {
+    QString *string = new QString;
+    for(QString s : instructions) {
+        string->append(QString("Q%1 %2 Q%3\n").arg(from()->id()).arg(s).arg(to()->id()));
+    }
+    return *string;
 }

@@ -34,7 +34,6 @@ Pocetna::Pocetna(QWidget *parent) :
 
 void Pocetna::prikaziLinijskeKomande()
 {
-    qDebug() << widgetLinijskeKomande;
     widgetLinijskeKomande->setVisible(true);
     this->setVisible(false);
 
@@ -50,6 +49,7 @@ Pocetna::~Pocetna()
 void Pocetna::prikaziGraph() {
     widgetGraph->setVisible(true);
     this->setVisible(false);
+    dynamic_cast<MainWindow* >(this->parent()->parent())->showBackNext();
 }
 
 

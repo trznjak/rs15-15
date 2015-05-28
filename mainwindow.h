@@ -4,13 +4,20 @@
 #include "graph.h"
 #include "linijskekomande.h"
 #include "pocetna.h"
-#include "linijskekomande.h"
+#include "instructionlab.h"
 
+#include <QObject>
 #include <QMainWindow>
 #include <QDebug>
 #include <QVBoxLayout>
 #include <QPushButton>
 #include <QSpacerItem>
+
+class Graph;
+class LinijskeKomande;
+class Pocetna;
+class InstructionLab;
+
 
 namespace Ui {
 class MainWindow;
@@ -24,8 +31,16 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    void showBackNext();
+
 public slots:
     void back();
+
+signals:
+    void next();
+
+private slots:
+    void on_next_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -33,6 +48,8 @@ private:
     Graph *graph;
     Pocetna *pocetna;
     LinijskeKomande *linijskeKomande;
+
+    InstructionLab *instructionLab;
 
 };
 

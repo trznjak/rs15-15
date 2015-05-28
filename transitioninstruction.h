@@ -3,8 +3,8 @@
 
 #include <QDialog>
 #include <QDebug>
-#include <QList>
 #include <QString>
+#include <QVector>
 
 #include "transition.h"
 
@@ -21,10 +21,18 @@ public:
     explicit TransitionInstruction(Transition *);
     ~TransitionInstruction();
 
+    QVector<QString> &instructions();
+
+private slots:
+    void on_add_clicked();
+    void on_delete_2_clicked();
+
 private:
     Ui::TransitionInstruction *ui;
 
-    QList<QString > instructions;
+    QVector<QString > m_instructions;
+
+
 
     Transition *m_caller;
 };

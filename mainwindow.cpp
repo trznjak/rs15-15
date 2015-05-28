@@ -9,22 +9,18 @@ MainWindow::MainWindow(QWidget *parent) :
     graph = new Graph(this);
     linijskeKomande = new LinijskeKomande(this);
     pocetna = new Pocetna(this);
-//    QPushButton *back = new QPushButton("Back", this);
 
-//    QVBoxLayout *vbox = new QVBoxLayout(this);
-//    vbox->addWidget(back);
-//    vbox->addWidget(graph);
-//    vbox->addWidget(pocetna);
-//    vbox->addWidget(linijskeKomande);
-//    vbox->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-//    ui->centralWidget->setLayout(vbox);
+    instructionLab = InstructionLab::instance();
     ui->centralWidget->layout()->addWidget(pocetna);
     ui->centralWidget->layout()->addWidget(graph);
     ui->centralWidget->layout()->addWidget(linijskeKomande);
     ui->centralWidget->layout()->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 
 
+    ui->back->hide();
+    ui->next->hide();
     QObject::connect(ui->back, SIGNAL(clicked()), this, SLOT(back()));
+    QObject::connect(this, SIGNAL(next()), instructionLab, SLOT(fromGraphToString()));
 }
 
 MainWindow::~MainWindow() {
@@ -32,6 +28,11 @@ MainWindow::~MainWindow() {
     delete graph;
     delete pocetna;
     delete linijskeKomande;
+}
+
+void MainWindow::showBackNext() {
+    ui->back->show();
+    ui->next->show();
 }
 
 void MainWindow::back() {
@@ -43,4 +44,9 @@ void MainWindow::back() {
     widgetGraph->setVisible(false);
     widgetPocetna->setVisible(true);
 
+}
+
+
+void MainWindow::on_next_clicked() {
+    emit next();
 }

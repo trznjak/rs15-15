@@ -8,6 +8,8 @@
 #include <QGraphicsItem>
 #include <QMessageBox>
 #include <QPolygon>
+#include <QObject>
+#include <QVector>
 
 #include "state.h"
 #include "enumeration.h"
@@ -16,8 +18,13 @@
 
 class GraphGraphicsScene;
 class State;
+class InstructionLab;
+class TransitionInstruction;
 
-class Transition : public QGraphicsItem {
+class Transition : public QObject, public QGraphicsItem {
+
+    Q_OBJECT
+
 public:
     Transition();
     ~Transition();
@@ -36,6 +43,10 @@ public:
     DRAW_SHAPE drawMode();
     void removeSelf();
     void setFlag(bool);
+    QString &ispis();
+
+public slots:
+    void snimiInstrukcije();
 
 protected:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
@@ -47,6 +58,7 @@ protected:
     QPainterPath shape() const;
 
 private:
+    int m_id;
     State *m_from;      // cvor od koga krece linija
     State *m_to;        // cvor do koga ide linija
 
@@ -57,13 +69,15 @@ private:
     DRAW_SHAPE m_line;
     bool m_flag;        // da li je kruzna grana ili normalna
 
-    QList<QString > instructions;
+    QVector<QString > instructions;
 
     Qt::GlobalColor m_color;
 
     InstructionLab *instructionLab;
+    TransitionInstruction *ti;
 
     QPointF controlPoint(QPointF begin, QPointF end, int length) const;
+
 };
 
 #endif // TRANSITION_H
