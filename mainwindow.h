@@ -5,6 +5,7 @@
 #include "linijskekomande.h"
 #include "pocetna.h"
 #include "instructionlab.h"
+#include "datoteka.h"
 
 #include <QObject>
 #include <QMainWindow>
@@ -17,6 +18,7 @@ class Graph;
 class LinijskeKomande;
 class Pocetna;
 class InstructionLab;
+class Datoteka;
 
 
 namespace Ui {
@@ -48,6 +50,7 @@ private:
     Graph *graph;
     Pocetna *pocetna;
     LinijskeKomande *linijskeKomande;
+    Datoteka *datoteka;
 
     InstructionLab *instructionLab;
 

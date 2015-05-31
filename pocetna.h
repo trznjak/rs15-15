@@ -20,11 +20,13 @@ public:
 public slots:
    void prikaziLinijskeKomande();
    void prikaziGraph();
+   void prikaziDatoteku();
 
 private:
     Ui::Pocetna *ui;
     QWidget* widgetLinijskeKomande;
     QWidget* widgetGraph;
+    QWidget* widgetDatoteka;
 };
 
 #endif // POCETNA_H
