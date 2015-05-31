@@ -1,6 +1,6 @@
 #include "dialog.h"
 #include "ui_dialog.h"
-
+#include "pocetna.h"
 Dialog::Dialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Dialog)
@@ -19,6 +19,14 @@ Dialog::Dialog(QWidget *parent) :
                           "Srecno :-)");
 
    ui->textEdit->setTextColor(QColor(Qt::green));
+   connect(ui->checkBox, SIGNAL(clicked()), this, SLOT(checked()));
+
+}
+
+void Dialog::checked()
+{
+    dynamic_cast<Pocetna*>(this->parent())->set_flag_dialog();
+
 }
 
 Dialog::~Dialog()

@@ -25,6 +25,7 @@ LinijskeKomande::LinijskeKomande(QWidget *parent) :
     connect(ui->btn3, SIGNAL(clicked()), qp2, SLOT(map()));
     connect(qp2, SIGNAL(mapped(QString)), this, SLOT(obrisi()) );
 
+    inst = InstructionLab::instance();
 
 
 //   Dialog qd;
@@ -44,7 +45,7 @@ void LinijskeKomande::ispisi()
 
 
 
-   std::vector<QString> ispravne_linije; //ovde smestam ispravne linije
+
 
 
    //ovde za sada bojim stvari u list widgetu
@@ -53,13 +54,7 @@ void LinijskeKomande::ispisi()
        if(!linija.contains(QRegExp("Q[0-9]+ [a-z] [a-z] [D,M,L] Q[0-9]+")))
        {
 
-
-
-
-
            ui->lineEdit->setStyleSheet("QLineEdit {background-color: red;}");
-
-
 
        }
        else
@@ -73,9 +68,17 @@ void LinijskeKomande::ispisi()
        }
 
 
+      /* for(int i=0;i!=ispravne_linije.size();i++)
+           qDebug()<<ispravne_linije[i];*/
 
 
 }
+
+void LinijskeKomande::salji_dalje()
+{
+    inst->setVectorInstruction(ispravne_linije);
+}
+
 void LinijskeKomande::ocisti()
 {
     ui->lineEdit->clear();
