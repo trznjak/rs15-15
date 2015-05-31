@@ -1,6 +1,6 @@
 #include "state.h"
 
-int State::s_numberOfNodes = 1;
+int State::s_numberOfNodes = 0;
 
 State::State(QPointF point)
     :m_center(point), m_id(s_numberOfNodes)
@@ -10,6 +10,7 @@ State::State(QPointF point)
     m_color = Qt::black;
     QGraphicsItem::setZValue(1);
     m_tipStanja = TIP(0);
+    instructionLab = InstructionLab::instance();
 }
 
 State::~State() {
@@ -30,6 +31,10 @@ QPointF State::center() {
 void State::setDrawShape(DRAW_SHAPE s){
     /* metoda za postavljanje mode-a iscrtavanja */
     m_circle = s;
+}
+
+int State::id() {
+    return m_id;
 }
 
 void State::setTipStanja(TIP t) {
@@ -83,7 +88,9 @@ void State::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent) {
     if(mouseEvent->button() == Qt::LeftButton && dynamic_cast<GraphGraphicsScene* >(this->scene())->mode() == MODE::DELETE) {
         for(Transition *t : m_transitions) {
             t->removeSelf();
+
         }
+        updateStateId(this->m_id);
         delete this;
     }
     else if(mouseEvent->button() == Qt::LeftButton && dynamic_cast<GraphGraphicsScene* >(this->scene())->mode() == MODE::TRANSITION) {
@@ -94,6 +101,7 @@ void State::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent) {
         transition->setFlag(true);
         this->scene()->addItem(transition);
         this->addTransiton(transition);
+        instructionLab->addToInstructionlab(transition);
     }
 }
 
@@ -112,5 +120,12 @@ QPainterPath State::shape() {
     QPainterPath path;
     path.addEllipse(this->boundingRect());
     return path;
+}
+
+void State::updateStateId(int id) {
+    for(QGraphicsItem *i : dynamic_cast<GraphGraphicsScene* >(this->scene())->items()) {
+        if(id < dynamic_cast<State* >(i)->m_id) dynamic_cast<State* >(i)->m_id--;
+    }
+    s_numberOfNodes--;
 }
 

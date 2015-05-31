@@ -3,6 +3,7 @@
 #include "dialog.h"
 #include "linijskekomande.h"
 #include "graph.h"
+#include "datoteka.h"
 
 Pocetna::Pocetna(QWidget *parent) :
     QWidget(parent),
@@ -27,30 +28,37 @@ Pocetna::Pocetna(QWidget *parent) :
 
     connect(ui->pushButton_2, SIGNAL(clicked()), this, SLOT(prikaziLinijskeKomande()));
     connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(prikaziGraph()));
+    connect(ui->pushButton_3, SIGNAL(clicked()), this, SLOT(prikaziDatoteku()));
     widgetLinijskeKomande = parent->findChild<QWidget* >("LinijskeKomande");
     widgetGraph = parent->findChild<QWidget* >("Graph");
+    widgetDatoteka = parent->findChild<QWidget* >("Datoteka");
 
+}
+
+Pocetna::~Pocetna() {
+    delete ui;
 }
 
 void Pocetna::prikaziLinijskeKomande()
 {
-    qDebug() << widgetLinijskeKomande;
     widgetLinijskeKomande->setVisible(true);
     this->setVisible(false);
-
+    dynamic_cast<MainWindow* >(this->parent()->parent())->showBackNext();
     Dialog qd;
     qd.exec();
 }
 
-Pocetna::~Pocetna()
-{
-    delete ui;
-}
 
 void Pocetna::prikaziGraph() {
     widgetGraph->setVisible(true);
     this->setVisible(false);
+    dynamic_cast<MainWindow* >(this->parent()->parent())->showBackNext();
 }
 
+void Pocetna::prikaziDatoteku(){
+    widgetDatoteka->setVisible(true);
+    this->setVisible(false);
+    dynamic_cast<MainWindow* >(this->parent()->parent())->showBackNext();
+}
 
 

@@ -8,23 +8,23 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     graph = new Graph(this);
     linijskeKomande = new LinijskeKomande(this);
+    datoteka = new Datoteka(this);
     pocetna = new Pocetna(this);
-//    QPushButton *back = new QPushButton("Back", this);
 
-//    QVBoxLayout *vbox = new QVBoxLayout(this);
-//    vbox->addWidget(back);
-//    vbox->addWidget(graph);
-//    vbox->addWidget(pocetna);
-//    vbox->addWidget(linijskeKomande);
-//    vbox->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-//    ui->centralWidget->setLayout(vbox);
+
+    instructionLab = InstructionLab::instance();
     ui->centralWidget->layout()->addWidget(pocetna);
     ui->centralWidget->layout()->addWidget(graph);
     ui->centralWidget->layout()->addWidget(linijskeKomande);
+    ui->centralWidget->layout()->addWidget(datoteka);
     ui->centralWidget->layout()->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 
-
+    ui->back->hide();
+    ui->next->hide();
     QObject::connect(ui->back, SIGNAL(clicked()), this, SLOT(back()));
+    QObject::connect(this, SIGNAL(next()), instructionLab, SLOT(fromGraphToString()));
+    QObject::connect(datoteka, SIGNAL(losaKomanda()), this, SLOT(ugasiNext()));
+    QObject::connect(datoteka, SIGNAL(upaliNext()), this, SLOT(upaliNext()));
 }
 
 MainWindow::~MainWindow() {
@@ -34,13 +34,33 @@ MainWindow::~MainWindow() {
     delete linijskeKomande;
 }
 
+void MainWindow::showBackNext() {
+    ui->back->show();
+    ui->next->show();
+}
+
 void MainWindow::back() {
     QWidget *widgetLinijskeKomande = this->findChild<QWidget* >("LinijskeKomande");
     QWidget *widgetGraph = this->findChild<QWidget* >("Graph");
     QWidget *widgetPocetna = this->findChild<QWidget* >("Pocetna");
+    QWidget *widgetDatoteka = this->findChild<QWidget* >("Datoteka");
 
     widgetLinijskeKomande->setVisible(false);
     widgetGraph->setVisible(false);
+    widgetDatoteka->setVisible(false);
     widgetPocetna->setVisible(true);
 
+}
+
+void MainWindow::ugasiNext() {
+    ui->next->setVisible(false);
+}
+
+void MainWindow::upaliNext() {
+    ui->next->setVisible(true);
+}
+
+
+void MainWindow::on_next_clicked() {
+    emit next();
 }

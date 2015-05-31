@@ -24,7 +24,8 @@ SOURCES += main.cpp\
     linijskekomande.cpp \
     pocetna.cpp \
     transitioninstruction.cpp \
-    dialog.cpp
+    dialog.cpp \
+    datoteka.cpp
 
 HEADERS  += mainwindow.h \
     enumeration.h \
@@ -36,17 +37,20 @@ HEADERS  += mainwindow.h \
     linijskekomande.h \
     pocetna.h \
     transitioninstruction.h \
-    dialog.h
+    dialog.h \
+    datoteka.h
 
 FORMS    += mainwindow.ui \
     graph.ui \
     linijskekomande.ui \
     pocetna.ui \
     transitioninstruction.ui \
-    dialog.ui
+    dialog.ui \
+    datoteka.ui
 
 RESOURCES += \
-    images/icons.qrc
+    images/icons.qrc \
+    file/instruciton.qrc
 
 DISTFILES +=
 

@@ -7,5 +7,8 @@
         <file>hand.png</file>
         <file>line.png</file>
         <file>circle.png</file>
+        <file>backArrow.png</file>
+        <file>backwardArrow</file>
+        <file>forward.png</file>
     </qresource>
 </RCC>
