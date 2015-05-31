@@ -43,7 +43,7 @@ void Pocetna::prikaziLinijskeKomande()
 {
     widgetLinijskeKomande->setVisible(true);
     this->setVisible(false);
-
+    dynamic_cast<MainWindow* >(this->parent()->parent())->showBackNext();
     Dialog qd;
     qd.exec();
 }
@@ -56,9 +56,9 @@ void Pocetna::prikaziGraph() {
 }
 
 void Pocetna::prikaziDatoteku(){
-    qDebug() << widgetDatoteka;
     widgetDatoteka->setVisible(true);
     this->setVisible(false);
+    dynamic_cast<MainWindow* >(this->parent()->parent())->showBackNext();
 }
 
 

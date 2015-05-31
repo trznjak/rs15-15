@@ -19,8 +19,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->centralWidget->layout()->addWidget(datoteka);
     ui->centralWidget->layout()->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 
-    qDebug() << ui->centralWidget->children();
-
     ui->back->hide();
     ui->next->hide();
     QObject::connect(ui->back, SIGNAL(clicked()), this, SLOT(back()));
@@ -43,10 +41,11 @@ void MainWindow::back() {
     QWidget *widgetLinijskeKomande = this->findChild<QWidget* >("LinijskeKomande");
     QWidget *widgetGraph = this->findChild<QWidget* >("Graph");
     QWidget *widgetPocetna = this->findChild<QWidget* >("Pocetna");
-    //TODO: dodati datotke //QWidget *widgetPocetna = this->findChild<QWidget* >("Datoteka");
+    QWidget *widgetDatoteka = this->findChild<QWidget* >("Datoteka");
 
     widgetLinijskeKomande->setVisible(false);
     widgetGraph->setVisible(false);
+    widgetDatoteka->setVisible(false);
     widgetPocetna->setVisible(true);
 
 }
