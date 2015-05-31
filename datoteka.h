@@ -7,11 +7,8 @@ namespace Ui {
 class Datoteka;
 }
 
-class Datoteka : public QWidget
-{
+class Datoteka : public QWidget {
     Q_OBJECT
-
-
 
 public:
     explicit Datoteka(QWidget *parent = 0);
@@ -20,8 +17,14 @@ public:
 public slots:
     void ucitaj();
 
+signals:
+    void losaKomanda();
+    void upaliNext();
+
 private:
     Ui::Datoteka *ui;
+
+    bool flag; //da li postoji losa komanda
 };
 
 #endif // DATOTEKA_H

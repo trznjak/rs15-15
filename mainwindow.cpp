@@ -23,6 +23,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->next->hide();
     QObject::connect(ui->back, SIGNAL(clicked()), this, SLOT(back()));
     QObject::connect(this, SIGNAL(next()), instructionLab, SLOT(fromGraphToString()));
+    QObject::connect(datoteka, SIGNAL(losaKomanda()), this, SLOT(ugasiNext()));
+    QObject::connect(datoteka, SIGNAL(upaliNext()), this, SLOT(upaliNext()));
 }
 
 MainWindow::~MainWindow() {
@@ -48,6 +50,14 @@ void MainWindow::back() {
     widgetDatoteka->setVisible(false);
     widgetPocetna->setVisible(true);
 
+}
+
+void MainWindow::ugasiNext() {
+    ui->next->setVisible(false);
+}
+
+void MainWindow::upaliNext() {
+    ui->next->setVisible(true);
 }
 
 

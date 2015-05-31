@@ -25,6 +25,11 @@ const QVector<Transition* > &InstructionLab::transitions() {
     return m_transitions;
 }
 
+void InstructionLab::setVectorInstruction(QVector<QString> &v) {
+    m_instructionsAsString.clear();
+    m_instructionsAsString = v;
+}
+
 InstructionLab* InstructionLab::instance() {
     /* klasa singelton */
     if(!s_instructionLab)
@@ -34,9 +39,9 @@ InstructionLab* InstructionLab::instance() {
 
 
 void InstructionLab::fromGraphToString() {
-    m_instructionsAsString.clear();
-    for(Transition *t : m_transitions)
-        m_instructionsAsString.append(t->ispis());
+//    m_instructionsAsString.clear();
+//    for(Transition *t : m_transitions)
+//        m_instructionsAsString.append(t->ispis());
     qDebug() << m_instructionsAsString;
 }
 

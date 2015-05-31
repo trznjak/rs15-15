@@ -25,8 +25,7 @@ namespace Ui {
 class MainWindow;
 }
 
-class MainWindow : public QMainWindow
-{
+class MainWindow : public QMainWindow {
     Q_OBJECT
 
 public:
@@ -37,6 +36,8 @@ public:
 
 public slots:
     void back();
+    void ugasiNext();
+    void upaliNext();
 
 signals:
     void next();

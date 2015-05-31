@@ -11,6 +11,8 @@ Datoteka::Datoteka(QWidget *parent) :
     ui->setupUi(this);
     this->setVisible(false);
 
+    flag = false;
+
     connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(ucitaj()));
 }
 
@@ -36,6 +38,9 @@ void Datoteka::ucitaj()
 
             ui->listWidget->addItem(item);
             ui->listWidget->show();
+
+            emit losaKomanda();
+            flag = true;
         }
         else
         {
@@ -44,6 +49,10 @@ void Datoteka::ucitaj()
             ui->listWidget->addItem(item);
 
         }
+    }
+
+    if(!flag) {
+        emit upaliNext();
     }
 
     file.close();

@@ -22,6 +22,7 @@ public:
     void addToInstructionlab(Transition *);
     void removeTransition(Transition *);
     const QVector<Transition* >& transitions();
+    void setVectorInstruction(QVector<QString> &v);
     static InstructionLab* instance();
 
 public slots:
