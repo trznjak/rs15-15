@@ -3,6 +3,10 @@
 
 #include <QWidget>
 
+#include "instructionlab.h"
+
+class InstructionLab;
+
 namespace Ui {
 class Datoteka;
 }
@@ -23,6 +27,9 @@ signals:
 
 private:
     Ui::Datoteka *ui;
+
+    InstructionLab *instructionLab;
+    QVector<QString> instructions;
 
     bool flag; //da li postoji losa komanda
 };

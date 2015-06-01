@@ -3,6 +3,7 @@
 #include<QDebug>
 #include<QDialog>
 #include "dialog.h"
+
 LinijskeKomande::LinijskeKomande(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::LinijskeKomande)

@@ -18,6 +18,8 @@ void Datoteka::ucitaj()
 {
     flag = false;
     ui->listWidget->clear();
+    instructions.clear();
+
     QFile file("komande.txt");
     if(!file.open(QIODevice::ReadOnly)) {
         QMessageBox::information(0, "error", file.errorString());
@@ -43,6 +45,7 @@ void Datoteka::ucitaj()
         else
         {
             QListWidgetItem *item = new QListWidgetItem(line, ui->listWidget);
+            instructions.push_back(line);
             item->setForeground(Qt::black);
             ui->listWidget->addItem(item);
         }
@@ -54,6 +57,8 @@ void Datoteka::ucitaj()
     else {
         emit losaKomanda();
     }
+
+    instructionLab->setVectorInstruction(instructions);
 
     file.close();
 }

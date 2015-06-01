@@ -13,8 +13,8 @@ TransitionInstruction::TransitionInstruction(Transition *caller) :
     ui->lineEdit_2->setMaxLength(1);
     ui->lineEdit_2->setPlaceholderText("Karakter");
     ui->lineEdit_3->setMaxLength(1);
-    ui->lineEdit_3->setPlaceholderText("R ili L");
-    QRegExp rx ("[R|L]");
+    ui->lineEdit_3->setPlaceholderText("R, S, L");
+    QRegExp rx ("[R|S|L]");
     ui->lineEdit_3->setValidator(new QRegExpValidator(rx, this));
     ui->listWidget->setSelectionMode(QAbstractItemView::SingleSelection);
 
@@ -32,9 +32,10 @@ QVector<QString> &TransitionInstruction::instructions() {
 
 
 void TransitionInstruction::on_add_clicked() {
-    QString string = QString("%1 %2 %3").arg(ui->lineEdit->text()).arg(ui->lineEdit_2->text()).arg(ui->lineEdit_3->text());
-    m_instructions.push_back(string);
-    ui->listWidget->addItem(string);
+    QString string1 = QString("%1 / %2 -> %3").arg(ui->lineEdit->text()).arg(ui->lineEdit_2->text()).arg(ui->lineEdit_3->text());
+    QString string2 = QString("%1 %2 %3").arg(ui->lineEdit->text()).arg(ui->lineEdit_2->text()).arg(ui->lineEdit_3->text());
+    m_instructions.push_back(string1);
+    ui->listWidget->addItem(string2);
 }
 
 void TransitionInstruction::on_delete_2_clicked() {

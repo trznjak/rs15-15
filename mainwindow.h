@@ -32,7 +32,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-    void showBackNext();
+    void showBack();
 
 public slots:
     void back();
@@ -44,6 +44,7 @@ signals:
 
 private slots:
     void on_next_clicked();
+    void tapeAnimation();
 
 private:
     Ui::MainWindow *ui;
@@ -52,9 +53,9 @@ private:
     Pocetna *pocetna;
     LinijskeKomande *linijskeKomande;
     Datoteka *datoteka;
+    QWidget *traka; // TODO: da se ubaci traka na ovo mesto
 
     InstructionLab *instructionLab;
-
 };
 
 #endif // MAINWINDOW_H

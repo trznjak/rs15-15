@@ -37,4 +37,11 @@ InstructionLab* InstructionLab::instance() {
     return s_instructionLab;
 }
 
+void InstructionLab::setInVectorFromGraph() {
+    for(Transition *t : m_transitions) {
+        m_instructionsAsString.append(t->ispis());
+    }
+}
+
+
 

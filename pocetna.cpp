@@ -34,7 +34,6 @@ Pocetna::Pocetna(QWidget *parent) :
     widgetDatoteka = parent->findChild<QWidget* >("Datoteka");
 
     flag_dialog=false;
-
 }
 
 Pocetna::~Pocetna() {
@@ -43,9 +42,10 @@ Pocetna::~Pocetna() {
 
 void Pocetna::prikaziLinijskeKomande()
 {
+    tipUnosa = INPUT_TYPE::LINECOMMAND;
     widgetLinijskeKomande->setVisible(true);
     this->setVisible(false);
-    dynamic_cast<MainWindow* >(this->parent()->parent())->showBackNext();
+    dynamic_cast<MainWindow* >(this->parent()->parent())->showBack();
     if(!flag_dialog)
     {
         Dialog qd(this);
@@ -55,15 +55,20 @@ void Pocetna::prikaziLinijskeKomande()
 
 
 void Pocetna::prikaziGraph() {
+    tipUnosa = INPUT_TYPE::GRAPH;
     widgetGraph->setVisible(true);
     this->setVisible(false);
-    dynamic_cast<MainWindow* >(this->parent()->parent())->showBackNext();
+
+    MainWindow *mw = dynamic_cast<MainWindow* >(this->parent()->parent());
+    mw->showBack();
+    mw->upaliNext();
 }
 
 void Pocetna::prikaziDatoteku(){
+    tipUnosa = INPUT_TYPE::FILE_I;
     widgetDatoteka->setVisible(true);
     this->setVisible(false);
-    dynamic_cast<MainWindow* >(this->parent()->parent())->showBackNext();
+    dynamic_cast<MainWindow* >(this->parent()->parent())->showBack();
 }
 
 void Pocetna::set_flag_dialog()

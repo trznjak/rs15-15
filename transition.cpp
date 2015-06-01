@@ -10,17 +10,13 @@ Transition::Transition() {
     m_flag = false;
     QGraphicsItem::setFlag(QGraphicsItem::ItemIsFocusable);
 
-    instructions.push_front("1/0, R");
-    instructions.push_front("0/0, L");
-    instructions.push_front("=/<, R");
-
     ti = new TransitionInstruction(this);
     QObject::connect(ti, SIGNAL(accepted()), this, SLOT(snimiInstrukcije()));
 
 }
 
 Transition::~Transition() {
-//    delete instructions;
+
 }
 
 void Transition::setBegin(QPointF begin) {
@@ -89,7 +85,8 @@ void Transition::setFlag(bool f) {
 }
 
 void Transition::snimiInstrukcije() {
-    //instructions = ti->instructions();
+    instructions = ti->instructions();
+    QGraphicsItem::update();
 }
 
 void Transition::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
