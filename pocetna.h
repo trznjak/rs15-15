@@ -4,6 +4,8 @@
 #include <QWidget>
 #include <QDebug>
 
+#include "enumeration.h"
+
 namespace Ui {
 class Pocetna;
 }
@@ -29,6 +31,8 @@ private:
     QWidget* widgetLinijskeKomande;
     QWidget* widgetGraph;
     QWidget* widgetDatoteka;
+
+    INPUT_TYPE tipUnosa;
 };
 
 #endif // POCETNA_H

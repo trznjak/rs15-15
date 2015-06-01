@@ -11,14 +11,13 @@ Datoteka::Datoteka(QWidget *parent) :
     ui->setupUi(this);
     this->setVisible(false);
 
-    flag = false;
-
     connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(ucitaj()));
 }
 
 void Datoteka::ucitaj()
 {
-
+    flag = false;
+    ui->listWidget->clear();
     QFile file("komande.txt");
     if(!file.open(QIODevice::ReadOnly)) {
         QMessageBox::information(0, "error", file.errorString());
@@ -29,7 +28,7 @@ void Datoteka::ucitaj()
     while(!in.atEnd()) {
         QString line = in.readLine();
 
-        if(!line.contains(QRegExp("Q[0-9]+ [a-z] [a-z] [D,M,L] Q[0-9]+")))
+        if(!line.contains(QRegExp("Q[0-9]+ [a-z] [a-z] [R,S,L] Q[0-9]+")))
         {
 
             QListWidgetItem *item = new QListWidgetItem(line, ui->listWidget);
@@ -39,7 +38,6 @@ void Datoteka::ucitaj()
             ui->listWidget->addItem(item);
             ui->listWidget->show();
 
-            emit losaKomanda();
             flag = true;
         }
         else
@@ -47,12 +45,14 @@ void Datoteka::ucitaj()
             QListWidgetItem *item = new QListWidgetItem(line, ui->listWidget);
             item->setForeground(Qt::black);
             ui->listWidget->addItem(item);
-
         }
     }
 
     if(!flag) {
         emit upaliNext();
+    }
+    else {
+        emit losaKomanda();
     }
 
     file.close();

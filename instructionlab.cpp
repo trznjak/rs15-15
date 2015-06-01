@@ -38,10 +38,3 @@ InstructionLab* InstructionLab::instance() {
 }
 
 
-void InstructionLab::fromGraphToString() {
-//    m_instructionsAsString.clear();
-//    for(Transition *t : m_transitions)
-//        m_instructionsAsString.append(t->ispis());
-    qDebug() << m_instructionsAsString;
-}
-

@@ -25,9 +25,6 @@ public:
     void setVectorInstruction(QVector<QString> &v);
     static InstructionLab* instance();
 
-public slots:
-    void fromGraphToString();
-
 
 private:
     InstructionLab();

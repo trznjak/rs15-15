@@ -13,5 +13,11 @@ enum DRAW_SHAPE {
     NORMAL,
 };
 
+enum INPUT_TYPE {
+    GRAPH,
+    LINECOMMAND,
+    FILE_I
+};
+
 #endif // ENUMERATION
 
