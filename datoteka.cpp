@@ -3,6 +3,7 @@
 #include <QFile>
 #include <QMessageBox>
 #include <QDebug>
+#include <QFileDialog>
 
 Datoteka::Datoteka(QWidget *parent) :
     QWidget(parent),
@@ -20,12 +21,15 @@ void Datoteka::ucitaj()
     ui->listWidget->clear();
     instructions.clear();
 
-    QFile file("komande.txt");
-    if(!file.open(QIODevice::ReadOnly)) {
-        QMessageBox::information(0, "error", file.errorString());
-    }
+//    QFileDialog dialog(this);
+//    dialog.setFileMode(QFileDialog::AnyFile);
 
-    QTextStream in(&file);
+     QString fileName = QFileDialog::getOpenFileName(this,
+        tr("Izaberite datoteku"), "/home", tr("Text files (*.txt)"));
+
+
+
+    QTextStream in(&fileName);
 
     while(!in.atEnd()) {
         QString line = in.readLine();
@@ -60,7 +64,7 @@ void Datoteka::ucitaj()
 
     instructionLab->setVectorInstruction(instructions);
 
-    file.close();
+
 }
 
 Datoteka::~Datoteka()
