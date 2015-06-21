@@ -28,6 +28,7 @@ signals:
 private:
     Ui::Datoteka *ui;
 
+
     InstructionLab *instructionLab;
     QVector<QString> instructions;
 
